@@ -20,13 +20,10 @@ public class FilterWeb extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		if (request.getHeader("Authorization") != null) {
-			System.out.println("DEBUG doFilterInternal: " + request.getHeader("Authorization"));
 			Authentication auth = TokenUtil.decodeToken(request);
-			System.out.println("DEBUG decodeToken: " + auth);
 			if (auth != null) {
 				SecurityContextHolder.getContext().setAuthentication(auth);
 			} else {
-				System.out.println("DEBUG: Erro no token");
 				ErrorDTO errorToken = new ErrorDTO(401, "Usuário não autorizado para este sistema!");
 				response.setStatus(errorToken.getStatus());
 				response.setContentType("application/json");

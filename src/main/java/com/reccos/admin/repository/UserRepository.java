@@ -6,5 +6,5 @@ import com.reccos.admin.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	User findByLoginOrEmail(String login, String email);
+	User findByLoginOrPassword(String login, String password);
 }

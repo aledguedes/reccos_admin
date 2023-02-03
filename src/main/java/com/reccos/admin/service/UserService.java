@@ -13,10 +13,12 @@ public class UserService {
 
 	@Autowired
 	private UserRepository repository;
+
+//	@Autowired
+//	private BCryptPasswordEncoder encoder;
 	
 	public User recuperarUser(User original) {
-
-		User user = repository.findByLoginOrEmail(original.getLogin(), original.getEmail());
+		User user = repository.findByLoginOrPassword(original.getLogin(), original.getEmail());
 		if (user != null)
 			if (user.getPassword().equals(original.getPassword())) {
 				user.setPassword(null);
@@ -33,6 +35,8 @@ public class UserService {
 		if (novo.getLogin().length() > 0 && novo.getPassword().length() > 0) {
 //			novo.setAtivo(1);
 			try {
+				novo.setId(null);
+//				novo.setPassword(encoder.encode(novo.getPassword()));
 				repository.save(novo);
 				return novo;
 			} catch (Exception ex) {

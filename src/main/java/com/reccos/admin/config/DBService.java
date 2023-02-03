@@ -3,12 +3,15 @@ package com.reccos.admin.config;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.reccos.admin.model.League;
 import com.reccos.admin.model.Team;
+import com.reccos.admin.model.User;
 import com.reccos.admin.repository.LeagueRepository;
 import com.reccos.admin.repository.TeamRepository;
+import com.reccos.admin.repository.UserRepository;
 
 @Service
 public class DBService {
@@ -18,8 +21,17 @@ public class DBService {
 	
 	@Autowired
 	private TeamRepository teamRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 
 	public void InstanciaDB() {
+		User user = new User(null, "kokhym", "aledguedes@gmail.com", "123456");
+		User user1 = new User(null, "alexandre", "aledguedes@gmail.com", "123456");
+		
 		Team tm1 = new Team
 		(1, "São Paulo Futebol Clube", "São Paulo", null, "SPFC", "Santo Paulo", "01100-000", "Rua São Paulo", 1, 
 				"Morumbi", null, "São Paulo", "SP",
@@ -55,6 +67,7 @@ public class DBService {
 		League lg1 = new League(1, "El Potato League", "Potato", null, null, "Mata-mata", "Canindé", true, null);
 //		League lg2 = new League(2, "El Potato League B", "Potato B", null, null, "Mata-mata", "Canindé", true, null);
 		
+		userRepository.saveAll(Arrays.asList(user));
 		teamRepository.saveAll(Arrays.asList(tm1, tm2, tm3, tm4, tm5, tm6));
 		leagueRepository.saveAll(Arrays.asList(lg1));
 	}
