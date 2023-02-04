@@ -38,16 +38,6 @@ public class LeagueController {
 		List<League> list = lService.listAll();
 		return ResponseEntity.ok().body(list);
 	}
-	
-	@GetMapping("/free")
-	public String sayFreeHello() {
-		return "ENDPOINT LIBERADO PARA ACESSO SEM TOKEN";
-	}
-	
-	@GetMapping("/auth")
-	public String sayAuthHello() {
-		return "ENDPOINT NÃO LIBERADO PARA ACESSO SEM TOKEN";
-	}
 
 	@GetMapping("/leagues/{id}")
 	public ResponseEntity<League> getTutorialById(@PathVariable("id") long id) {

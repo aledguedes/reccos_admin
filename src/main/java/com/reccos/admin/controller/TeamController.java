@@ -73,13 +73,14 @@ public class TeamController {
 		return ResponseEntity.ok(service.findByName(name));
 	}
 
-	@GetMapping("/teams/{tagId}/leagues")
-	public ResponseEntity<List<League>> getAllTutorialsByTagId(@PathVariable(value = "tagId") Long tagId) {
-		if (!teamRepository.existsById(tagId)) {
-			throw new ObjectnotFoundException("Not found Tag  with id = " + tagId);
+	@GetMapping("/teams/{teamId}/leagues")
+	public ResponseEntity<List<League>> getAllTutorialsByTagId(@PathVariable(value = "teamId") Long teamId) {
+		if (!teamRepository.existsById(teamId)) {
+			throw new ObjectnotFoundException("Not found Tag  with id = " + teamId);
 		}
 
-		List<League> tutorials = tutorialRepository.findLeaguessByTeamsId(tagId);
+		List<League> tutorials = tutorialRepository.findLeaguesByTeamsId(teamId);
+		System.out.println("debug: "+teamId);
 		return new ResponseEntity<>(tutorials, HttpStatus.OK);
 	}
 	
@@ -94,12 +95,12 @@ public class TeamController {
 	public ResponseEntity<Team> addTag(@PathVariable(value = "ligaId") Long ligaId,
 			@RequestBody Team tagRequest) {
 		Team tag = tutorialRepository.findById(ligaId).map(tutorial -> {
-			long tagId = tagRequest.getId();
+			long teamId = tagRequest.getId();
 
 			// tag is existed
-			if (tagId != 0L) {
-				Team _tag = teamRepository.findById(tagId)
-						.orElseThrow(() -> new ObjectnotFoundException("Not found Tag with id = " + tagId));
+			if (teamId != 0L) {
+				Team _tag = teamRepository.findById(teamId)
+						.orElseThrow(() -> new ObjectnotFoundException("Not found Tag with id = " + teamId));
 				tutorial.addTag(_tag);
 				tutorialRepository.save(tutorial);
 				return _tag;
@@ -123,13 +124,13 @@ public class TeamController {
 		return ResponseEntity.badRequest().build();
 	}
 
-	@DeleteMapping("/leagues/{ligaId}/teams/{tagId}")
+	@DeleteMapping("/leagues/{ligaId}/teams/{teamId}")
 	public ResponseEntity<HttpStatus> deleteTagFromTutorial(@PathVariable(value = "ligaId") Long ligaId,
-			@PathVariable(value = "tagId") Long tagId) {
+			@PathVariable(value = "teamId") Long teamId) {
 		League tutorial = tutorialRepository.findById(ligaId)
 				.orElseThrow(() -> new ObjectnotFoundException("Not found Tutorial with id = " + ligaId));
 
-		tutorial.removeTag(tagId);
+		tutorial.removeTag(teamId);
 		tutorialRepository.save(tutorial);
 
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);

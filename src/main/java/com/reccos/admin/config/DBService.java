@@ -65,10 +65,10 @@ public class DBService {
 						null, "(00) 12345-6789", true, null, null);
 		
 		League lg1 = new League(1, "El Potato League", "Potato", null, null, "Mata-mata", "Canindé", true, null);
-//		League lg2 = new League(2, "El Potato League B", "Potato B", null, null, "Mata-mata", "Canindé", true, null);
+		League lg2 = new League(2, "El Potato League B", "Potato B", null, null, "Mata-mata", "Canindé", true, null);
 		
 		userRepository.saveAll(Arrays.asList(user));
 		teamRepository.saveAll(Arrays.asList(tm1, tm2, tm3, tm4, tm5, tm6));
-		leagueRepository.saveAll(Arrays.asList(lg1));
+		leagueRepository.saveAll(Arrays.asList(lg1, lg2));
 	}
 }

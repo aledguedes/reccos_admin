@@ -18,12 +18,14 @@ public class UserService {
 //	private BCryptPasswordEncoder encoder;
 	
 	public User recuperarUser(User original) {
-		User user = repository.findByLoginOrPassword(original.getLogin(), original.getEmail());
-		if (user != null)
-			if (user.getPassword().equals(original.getPassword())) {
+		User user = repository.findByEmailOrPassword(original.getEmail(), original.getPassword());
+		if (user != null) {
+			if (user.getPassword().equals(original.getPassword()) && user.getEmail().equals(original.getEmail())) {
 				user.setPassword(null);
+				user.setEmail(null);
 				return user;
 			}
+		}
 		return null;
 	}
 

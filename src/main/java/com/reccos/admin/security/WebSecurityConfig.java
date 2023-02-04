@@ -32,9 +32,8 @@ public class WebSecurityConfig {
 		http.csrf().disable()
 		.authorizeHttpRequests()
 		.antMatchers(PUBLIC_MATCHERS).permitAll()
-		.antMatchers(HttpMethod.GET, "/api/free").permitAll()
 		.antMatchers(HttpMethod.GET, "/api/users").permitAll()
-		.antMatchers(HttpMethod.GET, "/api/*").permitAll()
+		.antMatchers(HttpMethod.GET, "/api/leagues/*").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/login").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/users").permitAll()
 		
