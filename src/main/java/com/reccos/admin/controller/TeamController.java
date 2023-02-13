@@ -80,11 +80,10 @@ public class TeamController {
 		}
 
 		List<League> tutorials = tutorialRepository.findLeaguesByTeamsId(teamId);
-		System.out.println("debug: "+teamId);
 		return new ResponseEntity<>(tutorials, HttpStatus.OK);
 	}
 	
-	@PostMapping("/teams/new")
+	@PostMapping("/teams")
 	public ResponseEntity<Team> criarTime(@RequestBody Team time) {
 		Team obj = service.create(time);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();

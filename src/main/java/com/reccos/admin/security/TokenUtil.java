@@ -63,7 +63,7 @@ public class TokenUtil {
 				return new UsernamePasswordAuthenticationToken(usuario, null, Collections.emptyList());
 			}
 		} catch (Exception e) {
-			System.out.println("DEBUG - Erro ao decodificar o token");
+			System.out.println("DEBUG - Erro ao decodificar o token => " + e.getMessage());
 		}
 		return null;
 

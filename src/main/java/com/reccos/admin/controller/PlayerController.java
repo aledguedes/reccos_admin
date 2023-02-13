@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,6 +60,13 @@ public class PlayerController {
 	@GetMapping("/players")
 	public ResponseEntity<List<Player>> listarTodos(){
 		List<Player> list = service.listAll();
+		return ResponseEntity.ok().body(list);
+	}
+
+	
+	@GetMapping("/players/paginate")
+	public ResponseEntity<Page<Player>> listarTodos(Pageable pageable){
+		Page<Player> list = service.listAllPaginate(pageable);
 		return ResponseEntity.ok().body(list);
 	}
 	

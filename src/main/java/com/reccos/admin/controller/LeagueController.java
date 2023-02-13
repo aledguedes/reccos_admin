@@ -51,13 +51,13 @@ public class LeagueController {
 		return ResponseEntity.ok(lService.findByName(key));
 	}
 
-	@PostMapping("/leagues")
+	@PostMapping("/leagues/new")
 	public ResponseEntity<League> createTutorial(@RequestBody League league) {
 		League obj = lService.create(league);
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	@PostMapping("/leagues/new")
+	@PostMapping("/leagues")
     public ResponseEntity<League> saveLeague(@RequestBody League league) {
 		League obj = lService.saveCustomer(league);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();

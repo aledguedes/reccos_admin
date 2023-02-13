@@ -23,10 +23,10 @@ import com.reccos.admin.service.UserService;
 @RestController
 @RequestMapping("/api")
 public class UserController {
-	
+
 	@Autowired
 	private UserService service;
-	
+
 	@PostMapping("/login")
 	public ResponseEntity<AuthToken> loginUser(@RequestBody User user) {
 		User newUser = service.recuperarUser(user);
@@ -38,42 +38,52 @@ public class UserController {
 			return ResponseEntity.ok(jwtToken);
 		}
 		return ResponseEntity.status(403).build();
-		
+
 	}
-	
+
 	@GetMapping("/users")
-	public ResponseEntity<ArrayList<User>> recuperarTodos(){
-		return ResponseEntity.ok(service.getAll());				
+	public ResponseEntity<ArrayList<User>> recuperarTodos() {
+		return ResponseEntity.ok(service.getAll());
 	}
-	
+
 	@PostMapping("/users")
-	public ResponseEntity<User> adicionarNovo(@RequestBody User usuario){
+	public ResponseEntity<User> adicionarNovo(@RequestBody User usuario) {
 		User res = service.newUser(usuario);
 		if (res != null) {
 			return ResponseEntity.status(200).body(res);
 		}
 		return ResponseEntity.badRequest().build();
 	}
-	
+
+	@PostMapping("/users/forgot")
+	public String forgotPass(@RequestBody User usuario) {
+		System.out.println("DEBUG CONTROLLER EMAIL: " + usuario.getEmail());
+		return service.recuperarSenha(usuario.getEmail());
+	}
+
+
+	@PostMapping("/users/forgot/update")
+	public User forgotUpdate(@RequestBody User usuario) {
+		return service.atualizarUser(usuario);
+	}
+
 	@PutMapping("/users/{id}")
-	public ResponseEntity<User> alterarDados(@RequestBody User usuario, @PathVariable Long id){
+	public ResponseEntity<User> alterarDados(@RequestBody User usuario, @PathVariable Long id) {
 		usuario.setId(id);
 		User res = service.atualizarUser(usuario);
 		if (res != null) {
 			return ResponseEntity.ok(res);
-		}
-		else {
+		} else {
 			return ResponseEntity.badRequest().build();
 		}
 	}
-	
+
 	@GetMapping("/users/{id}")
-	public ResponseEntity<User> recuperarPeloId(@PathVariable Long id){
+	public ResponseEntity<User> recuperarPeloId(@PathVariable Long id) {
 		User res = service.getById(id);
 		if (res != null) {
 			return ResponseEntity.ok(res);
-		}
-		else {
+		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}

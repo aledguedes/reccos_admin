@@ -1,10 +1,15 @@
 package com.reccos.admin.model;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -31,17 +36,25 @@ public class User {
 	@Size(max = 120)
 	private String password;
 
+	@Column(name = "cod_token")
+	private String codToken;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date validationToken;
+
 	public User() {
 		super();
 	}
 
 	public User(Long id, @NotBlank @Size(max = 20) String login, @NotBlank @Size(max = 50) @Email String email,
-			@NotBlank @Size(max = 120) String password) {
+			@NotBlank @Size(max = 120) String password, String codToken, Date validationToken) {
 		super();
 		this.id = id;
 		this.login = login;
 		this.email = email;
 		this.password = password;
+		this.codToken = codToken;
+		this.validationToken = validationToken;
 	}
 
 	public Long getId() {
@@ -74,6 +87,22 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getCodToken() {
+		return codToken;
+	}
+
+	public void setCodToken(String codToken) {
+		this.codToken = codToken;
+	}
+
+	public Date getValidationToken() {
+		return validationToken;
+	}
+
+	public void setValidationToken(Date validationToken) {
+		this.validationToken = validationToken;
 	}
 
 }

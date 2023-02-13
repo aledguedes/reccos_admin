@@ -1,6 +1,9 @@
 package com.reccos.admin.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,15 +11,20 @@ import org.springframework.stereotype.Service;
 import com.reccos.admin.model.User;
 import com.reccos.admin.repository.UserRepository;
 
+import net.bytebuddy.utility.RandomString;
+
 @Service
 public class UserService {
 
 	@Autowired
 	private UserRepository repository;
 
+	@Autowired
+	private EmailService emailService;
+
 //	@Autowired
 //	private BCryptPasswordEncoder encoder;
-	
+
 	public User recuperarUser(User original) {
 		User user = repository.findByEmailOrPassword(original.getEmail(), original.getPassword());
 		if (user != null) {
@@ -39,6 +47,9 @@ public class UserService {
 			try {
 				novo.setId(null);
 //				novo.setPassword(encoder.encode(novo.getPassword()));
+				novo.setPassword(novo.getPassword());
+				emailService.sendEmail(novo.getEmail(), "Cadastro de Clientes",
+						"Seu cadastro foi efetuado com sucesso!");
 				repository.save(novo);
 				return novo;
 			} catch (Exception ex) {
@@ -50,19 +61,51 @@ public class UserService {
 	}
 
 	public User atualizarUser(User user) {
-		// TODO Auto-generated method stub
-		try {
-			repository.save(user);
-			return user;
+
+		User newUser = repository.findByEmailAndCodToken(user.getEmail(), user.getCodToken());
+		if (newUser != null) {
+
+			Date diff = new Date(new Date().getTime() - newUser.getValidationToken().getTime());
+
+			if (diff.getTime() / 1000 < 1800) {
+//				newUser.setPassword(encoder.encode(user.getPassword()));
+				newUser.setPassword(newUser.getPassword());
+//				newUser.setCodToken(null);
+				return repository.save(newUser);
+
+			} else {
+				return null;
+			}
 		}
-		catch(Exception ex) {
-			return null;
-		}		
+		return null;
+
 	}
 
+	public String recuperarSenha(String email) {
+
+		User user = repository.findByEmail(email);
+		System.out.println("DEBUG" + user);
+		if (user != null) {
+			user.setCodToken(createTokenCod(user.getId()));
+			user.setValidationToken(new Date());
+			repository.save(user);
+//			emailService.sendEmail(user.getEmail(), "RECCOS! Resetar Senha",
+//					"Seu código para redefinição de senha é: " + user.getCodToken());
+			return "Código enviado! " + user.getCodToken();
+
+		}
+		return "E-mail não encontrado!";
+	}
 
 	public User getById(Long id) {
 		// TODO Auto-generated method stub
 		return repository.findById(id).orElse(null);
+	}
+
+	private String createTokenCod(Long id) {
+		DateFormat format = new SimpleDateFormat("yyyyHHmmssmmddMM");
+		String token = RandomString.make(10);
+		System.out.println("DEBUG: " + token + format.format(new Date()) + id);
+		return id + "R3c" + token + "c0$" + format.format(new Date());
 	}
 }

@@ -29,8 +29,8 @@ public class DBService {
 	private BCryptPasswordEncoder encoder;
 
 	public void InstanciaDB() {
-		User user = new User(null, "kokhym", "aledguedes@gmail.com", "123456");
-		User user1 = new User(null, "alexandre", "aledguedes@gmail.com", "123456");
+		User user = new User(null, "kokhym", "aledguedes@gmail.com", "123456", null, null);
+		User user1 = new User(null, "alexandre", "alexandredguedes@hotmail.com", "123456", null, null);
 		
 		Team tm1 = new Team
 		(1, "São Paulo Futebol Clube", "São Paulo", null, "SPFC", "Santo Paulo", "01100-000", "Rua São Paulo", 1, 
@@ -67,7 +67,7 @@ public class DBService {
 		League lg1 = new League(1, "El Potato League", "Potato", null, null, "Mata-mata", "Canindé", true, null);
 		League lg2 = new League(2, "El Potato League B", "Potato B", null, null, "Mata-mata", "Canindé", true, null);
 		
-		userRepository.saveAll(Arrays.asList(user));
+		userRepository.saveAll(Arrays.asList(user, user1));
 		teamRepository.saveAll(Arrays.asList(tm1, tm2, tm3, tm4, tm5, tm6));
 		leagueRepository.saveAll(Arrays.asList(lg1, lg2));
 	}
