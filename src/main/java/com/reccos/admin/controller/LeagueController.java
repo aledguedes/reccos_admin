@@ -59,10 +59,9 @@ public class LeagueController {
 	
 	@PostMapping("/leagues")
     public ResponseEntity<League> saveLeague(@RequestBody League league) {
-		League obj = lService.saveCustomer(league);
+		League obj = lService.createLeague(league);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
-//        return new ResponseEntity<>(lService.saveCustomer(league), HttpStatus.CREATED);
     }
 
 	@PutMapping("/leagues/{id}")

@@ -36,6 +36,9 @@ public class User {
 	@Size(max = 120)
 	private String password;
 
+	@Column(name = "federation_id")
+	private Integer federation;
+
 	@Column(name = "cod_token")
 	private String codToken;
 
@@ -47,12 +50,13 @@ public class User {
 	}
 
 	public User(Long id, @NotBlank @Size(max = 20) String login, @NotBlank @Size(max = 50) @Email String email,
-			@NotBlank @Size(max = 120) String password, String codToken, Date validationToken) {
+			@NotBlank @Size(max = 120) String password, Integer federation, String codToken, Date validationToken) {
 		super();
 		this.id = id;
 		this.login = login;
 		this.email = email;
 		this.password = password;
+		this.federation = federation;
 		this.codToken = codToken;
 		this.validationToken = validationToken;
 	}
@@ -103,6 +107,14 @@ public class User {
 
 	public void setValidationToken(Date validationToken) {
 		this.validationToken = validationToken;
+	}
+
+	public Integer getFederation() {
+		return federation;
+	}
+
+	public void setFederation(Integer federation) {
+		this.federation = federation;
 	}
 
 }

@@ -49,7 +49,7 @@ public class LeagueService {
 		return leagueRepository.save(obj);
 	}
 
-	public League saveCustomer(League league) {
+	public League createLeague(League league) {
 		League newLeague = new League();
 
 		newLeague.setId(league.getId());
@@ -59,6 +59,15 @@ public class LeagueService {
 		newLeague.setLeague_system(league.getLeague_system());
 		newLeague.setLeague_mode(league.getLeague_mode());
 		newLeague.setStatus(league.getStatus());
+		newLeague.setMax_players(league.getMax_players());
+		newLeague.setMin_players(league.getMin_players());
+		newLeague.setMax_teams(league.getMax_teams());
+		newLeague.setMin_teams(league.getMin_teams());
+		if(league.getQt_group() == null) {
+			newLeague.setQt_group(1);
+		} else {
+			newLeague.setQt_group(league.getQt_group());
+		}
 
 		newLeague.getTeams().addAll(league.getTeams().stream().map(v -> {
 			Team vv = teamService.listById(v.getId());

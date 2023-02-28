@@ -32,10 +32,14 @@ public class WebSecurityConfig {
 		http.csrf().disable()
 		.authorizeHttpRequests()
 		.antMatchers(PUBLIC_MATCHERS).permitAll()
-		.antMatchers(HttpMethod.GET, "/api/users/*").permitAll()
+		.antMatchers(HttpMethod.GET, "/api/users/**").permitAll()
 		.antMatchers(HttpMethod.GET, "/api/leagues/**").permitAll()
+		.antMatchers(HttpMethod.GET, "/api/teams/**").permitAll()
+		.antMatchers(HttpMethod.GET, "/api/players/**").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/login").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/users/**").permitAll()
+		.antMatchers(HttpMethod.GET, "/api/federation/**").permitAll()
+		.antMatchers(HttpMethod.POST, "/api/federation/**").permitAll()
 		
 		.anyRequest().authenticated().and().cors();
 		

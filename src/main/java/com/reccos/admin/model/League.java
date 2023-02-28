@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -43,6 +44,21 @@ public class League {
 	@Column(name = "league_mode")
 	private String league_mode;
 
+	@Column(name = "max_teams")
+	private Integer max_teams;
+
+	@Column(name = "max_players")
+	private Integer max_players;
+
+	@Column(name = "min_teams")
+	private Integer min_teams;
+
+	@Column(name = "min_players")
+	private Integer min_players;
+
+	@Column(name = "qt_group")
+	private Integer qt_group;
+
 	@Column(name = "status")
 	private Boolean status;
 
@@ -51,13 +67,23 @@ public class League {
 			@JoinColumn(name = "team_id") })
 	private Set<Team> teams = new HashSet<>();
 
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@JoinTable(name = "leagues_rounds", joinColumns = { @JoinColumn(name = "league_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "round_id") })
+	private Set<Round> rounds = new HashSet<>();
+
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinColumn(name = "federation_id", nullable = false)
+//	@JsonIgnore
+	private Federation federation;
+
 	public League() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public League(long id, String name, String surname, LocalDate dt_start, LocalDate dt_end, String league_system,
-			String league_mode, Boolean status, Set<Team> teams) {
+	public League(long id, String name, LocalDate dt_start, LocalDate dt_end, String league_system, String league_mode,
+			Integer max_teams, Integer max_players, Integer min_teams, Integer min_players, Integer qt_group,
+			Boolean status, Set<Team> teams, Set<Round> rounds, Federation federation) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -65,8 +91,55 @@ public class League {
 		this.dt_end = dt_end;
 		this.league_system = league_system;
 		this.league_mode = league_mode;
+		this.max_teams = max_teams;
+		this.max_players = max_players;
+		this.min_teams = min_teams;
+		this.min_players = min_players;
+		this.qt_group = qt_group;
 		this.status = status;
 		this.teams = teams;
+		this.rounds = rounds;
+		this.federation = federation;
+	}
+
+	public Integer getQt_group() {
+		return qt_group;
+	}
+
+	public void setQt_group(Integer qt_group) {
+		this.qt_group = qt_group;
+	}
+
+	public Integer getMax_teams() {
+		return max_teams;
+	}
+
+	public void setMax_teams(Integer max_teams) {
+		this.max_teams = max_teams;
+	}
+
+	public Integer getMax_players() {
+		return max_players;
+	}
+
+	public void setMax_players(Integer max_players) {
+		this.max_players = max_players;
+	}
+
+	public Integer getMin_teams() {
+		return min_teams;
+	}
+
+	public void setMin_teams(Integer min_teams) {
+		this.min_teams = min_teams;
+	}
+
+	public Integer getMin_players() {
+		return min_players;
+	}
+
+	public void setMin_players(Integer min_players) {
+		this.min_players = min_players;
 	}
 
 	public long getId() {
@@ -121,6 +194,14 @@ public class League {
 		return league_mode;
 	}
 
+	public Federation getFederation() {
+		return federation;
+	}
+
+	public void setFederation(Federation federation) {
+		this.federation = federation;
+	}
+
 	public void setLeague_mode(String league_mode) {
 		this.league_mode = league_mode;
 	}
@@ -131,6 +212,14 @@ public class League {
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	public Set<Round> getRounds() {
+		return rounds;
+	}
+
+	public void setRounds(Set<Round> rounds) {
+		this.rounds = rounds;
 	}
 
 	public void addTag(Team tag) {

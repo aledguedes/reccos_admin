@@ -27,6 +27,8 @@ public class Match {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private Integer idd_match;
+
 	@Column(name = "match_date")
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate match_date;
@@ -53,13 +55,23 @@ public class Match {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Match(Long id, LocalDate match_date, Team home_team, Team visiting_team, Set<Round> rounds) {
+	public Match(Long id, Integer idd_match, LocalDate match_date, Team home_team, Team visiting_team,
+			Set<Round> rounds) {
 		super();
 		this.id = id;
+		this.idd_match = idd_match;
 		this.match_date = match_date;
 		this.home_team = home_team;
 		this.visiting_team = visiting_team;
 		this.rounds = rounds;
+	}
+
+	public Integer getIdd_match() {
+		return idd_match;
+	}
+
+	public void setIdd_match(Integer idd_match) {
+		this.idd_match = idd_match;
 	}
 
 	public Long getId() {

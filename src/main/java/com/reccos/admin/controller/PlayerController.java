@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.reccos.admin.dto.PathDTO;
 import com.reccos.admin.model.Player;
 import com.reccos.admin.service.PlayerService;
+import com.reccos.admin.utils.UploadService;
 
 @CrossOrigin("*")
 @RestController
@@ -30,8 +33,8 @@ public class PlayerController {
 	@Autowired
 	private PlayerService service;
 	
-//	@Autowired
-//	private UploadService uploadService;
+	@Autowired
+	private UploadService uploadService;
 	
 	@GetMapping("/players/{id}")
 	public ResponseEntity<Player> listById(@PathVariable Long id) {
@@ -77,18 +80,18 @@ public class PlayerController {
 		return ResponseEntity.created(uri).build();
 	}
 	
-//	@PostMapping("/upload")
-//	public ResponseEntity<PathDTO> uploadFoto(@RequestParam(name = "file") MultipartFile file){
-//		String path = uploadService.uploadFile(file);
-//		if (path != null) {
-//			PathDTO pathDto = new PathDTO();
-//			pathDto.setPathToFile(path);
-//			return ResponseEntity.status(201).body(pathDto);
-//		}
-//		return ResponseEntity.badRequest().build();
-//	}
+	@PostMapping("/players/upload")
+	public ResponseEntity<PathDTO> uploadFoto(@RequestParam(name = "file") MultipartFile file){
+		String path = uploadService.uploadImage(file);
+		if (path != null) {
+			PathDTO pathDto = new PathDTO();
+			pathDto.setPathToFile(path);
+			return ResponseEntity.status(201).body(pathDto);
+		}
+		return ResponseEntity.badRequest().build();
+	}
 	
-	@PutMapping("/players/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Player> atualizarTime(@PathVariable Long id, @RequestBody Player atleta){
 		Player obj = service.update(id, atleta);
 		
