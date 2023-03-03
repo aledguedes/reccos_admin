@@ -31,6 +31,9 @@ public class Round {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dt_start;
 
+	@Column(name = "league_idd")
+	private Long league_idd;
+
 	@Column(name = "dt_end")
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dt_end;
@@ -52,11 +55,12 @@ public class Round {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Round(Long id, LocalDate dt_start, LocalDate dt_end, Boolean status, Set<Match> matches,
+	public Round(Long id, LocalDate dt_start, Long league_idd, LocalDate dt_end, Boolean status, Set<Match> matches,
 			Set<League> leagues) {
 		super();
 		this.id = id;
 		this.dt_start = dt_start;
+		this.league_idd = league_idd;
 		this.dt_end = dt_end;
 		this.status = status;
 		this.matches = matches;
@@ -109,6 +113,14 @@ public class Round {
 
 	public void setLeagues(Set<League> leagues) {
 		this.leagues = leagues;
+	}
+
+	public Long getLeague_idd() {
+		return league_idd;
+	}
+
+	public void setLeague_idd(Long league_idd) {
+		this.league_idd = league_idd;
 	}
 
 }

@@ -6,12 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "players")
@@ -30,11 +27,6 @@ public class Player {
 	private String rg;
 	private String img_player;
 
-	@ManyToOne
-	@JoinColumn(name = "times_id")
-	@JsonIgnoreProperties({ "contratos", "liga" })
-	private Team team;
-
 	public Player() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -51,7 +43,6 @@ public class Player {
 		this.cpf = cpf;
 		this.rg = rg;
 		this.img_player = img_player;
-//		this.time = time;
 	}
 
 	public Long getId() {
@@ -124,13 +115,5 @@ public class Player {
 
 	public void setImg_player(String img_player) {
 		this.img_player = img_player;
-	}
-
-	public Team getTeam() {
-		return team;
-	}
-
-	public void setTeam(Team team) {
-		this.team = team;
 	}
 }

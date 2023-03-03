@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "leagues")
@@ -72,9 +73,9 @@ public class League {
 			@JoinColumn(name = "round_id") })
 	private Set<Round> rounds = new HashSet<>();
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "federation_id", nullable = false)
-//	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "federation_id")
+	@JsonIgnore
 	private Federation federation;
 
 	public League() {

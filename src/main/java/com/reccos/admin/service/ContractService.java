@@ -8,13 +8,18 @@ import org.springframework.stereotype.Service;
 
 import com.reccos.admin.exceptions.ObjectnotFoundException;
 import com.reccos.admin.model.Contract;
+import com.reccos.admin.model.Player;
 import com.reccos.admin.repository.ContractRepository;
+import com.reccos.admin.repository.PlayerRepository;
 
 @Service
 public class ContractService {
 
 	@Autowired
 	private ContractRepository repository;
+	
+	@Autowired
+	private PlayerRepository pRepository;
 	
 	public Contract listById(Long id) {
 		Optional<Contract> obj = repository.findById(id);
@@ -26,6 +31,10 @@ public class ContractService {
 	}
 
 	public Contract create(Contract contract) {
+		Contract c = new Contract();
+		Player player = new Player();
+		player = pRepository.save(contract.getPlayer());
+		c.setPlayer(player);
 		return repository.save(contract);
 	}
 

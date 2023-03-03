@@ -20,25 +20,25 @@ import com.reccos.admin.service.RoundService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/rounds")
 public class RoundController {
 
 	@Autowired
 	private RoundService service;
 
-	@GetMapping("/rounds")
+	@GetMapping
 	public ResponseEntity<List<Round>> getAllTutorials(@RequestParam(required = false) String title) {
 		List<Round> list = service.listAll();
 		return ResponseEntity.ok().body(list);
 	}
 
-	@GetMapping("/rounds/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Round> getTutorialById(@PathVariable("id") long id) {
 		Round obj = service.listById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@PostMapping("/rounds")
+	@PostMapping
 	public ResponseEntity<Round> createRound(@RequestBody Round organization) {
 		System.out.println("que vem? " + organization);
 		Round obj = service.createRound(organization);

@@ -34,10 +34,8 @@ public class DBService {
 	private BCryptPasswordEncoder encoder;
 
 	public void InstanciaDB() {
-		Federation f1 = new Federation(1, "LIGA NORDESTINA DE FUTEBOL", "AGRESTE", null, null, true);
-		federationRepository.saveAll(Arrays.asList(f1));
 
-		User user1 = new User(null, "kokhym", "aledguedes@gmail.com", "654321", 1, null, null);
+		User user1 = new User(null, "kokhym", "aledguedes@gmail.com", "12345", 1, null, null);
 
 		Team tm1 = new Team(1, "São Paulo Futebol Clube", "São Paulo", null, "SPFC", "Santo Paulo", "01100-000",
 				"Rua São Paulo", 1, "Morumbi", null, "São Paulo", "SP",
@@ -93,12 +91,18 @@ public class DBService {
 				"01100-000", "Rua Canindé", 1, "Canindé", null, "São Paulo", "SP",
 				"https://upload.wikimedia.org/wikipedia/pt/6/65/Associa%C3%A7%C3%A3o_Portuguesa_de_Desportos.png", null,
 				"(00) 12345-6789", true, null, null);
+		
+		Federation f1 = new Federation(1, "LIGA NORDESTINA DE FUTEBOL", "AGRESTE", null, null, true, null);
+		federationRepository.saveAll(Arrays.asList(f1));
 
-		League lg1 = new League(3, "El Potato League", null, null, "Mata-mata", "Futsal", 12, 20, 6, 9, 1, true, null,
+		League lg1 = new League(1, "El Potato League A", null, null, "Mata-mata", "Futsal", 12, 20, 6, 9, 1, true, null,
+				null, f1);
+		
+		League lg2 = new League(2, "El Potato League B", null, null, "Mata-mata", "Futsal", 12, 20, 6, 9, 1, true, null,
 				null, f1);
 
 		userRepository.saveAll(Arrays.asList(user1));
 		teamRepository.saveAll(Arrays.asList(tm1, tm2, tm3, tm4, tm5, tm6, tm7, tm8, tm9, tm10, tm11, tm12));
-		leagueRepository.saveAll(Arrays.asList(lg1));
+		leagueRepository.saveAll(Arrays.asList(lg1, lg2));
 	}
 }

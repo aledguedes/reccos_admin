@@ -1,6 +1,11 @@
 package com.reccos.admin.controller;
 
+import java.io.File;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.reccos.admin.dto.PathDTO;
 import com.reccos.admin.model.Player;
 import com.reccos.admin.service.PlayerService;
 import com.reccos.admin.utils.UploadService;
@@ -81,14 +85,21 @@ public class PlayerController {
 	}
 	
 	@PostMapping("/players/upload")
-	public ResponseEntity<PathDTO> uploadFoto(@RequestParam(name = "file") MultipartFile file){
-		String path = uploadService.uploadImage(file);
-		if (path != null) {
-			PathDTO pathDto = new PathDTO();
-			pathDto.setPathToFile(path);
-			return ResponseEntity.status(201).body(pathDto);
+	public String uploadFoto(@RequestParam(name = "file") MultipartFile file) throws Exception{
+		try {
+			System.out.println(file.getOriginalFilename());
+			System.out.println(file.getName());
+			System.out.println(file.getContentType());
+			System.out.println(file.getSize());
+			String path_directory = "D:\\TCC\\imagens";
+			System.out.println(path_directory);
+			Path path = Paths.get(path_directory + File.separator + file.getOriginalFilename());
+			Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+			return "Sucesso Djowww";
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
-		return ResponseEntity.badRequest().build();
+		return "deu ruim";
 	}
 	
 	@PutMapping("/{id}")
