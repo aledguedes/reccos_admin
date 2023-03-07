@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.reccos.admin.model.Federation;
 import com.reccos.admin.model.League;
+import com.reccos.admin.model.Player;
 import com.reccos.admin.model.Team;
 import com.reccos.admin.model.User;
 import com.reccos.admin.repository.FederationRepository;
 import com.reccos.admin.repository.LeagueRepository;
+import com.reccos.admin.repository.PlayerRepository;
 import com.reccos.admin.repository.TeamRepository;
 import com.reccos.admin.repository.UserRepository;
 
@@ -29,13 +31,17 @@ public class DBService {
 
 	@Autowired
 	private FederationRepository federationRepository;
+	
+	@Autowired
+	private PlayerRepository playerRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
 	public void InstanciaDB() {
 
-		User user1 = new User(null, "kokhym", "aledguedes@gmail.com", "12345", 1, null, null);
+		User user1 = new User(null, "kokhym", "aledguedes@gmail.com", "12345", 1, null, null, "admin");
+		User user2 = new User(null, "Xandão", "xandao@teste.com", "abcd1234", 1, null, null, "user");
 
 		Team tm1 = new Team(1, "São Paulo Futebol Clube", "São Paulo", null, "SPFC", "Santo Paulo", "01100-000",
 				"Rua São Paulo", 1, "Morumbi", null, "São Paulo", "SP",
@@ -100,9 +106,12 @@ public class DBService {
 		
 		League lg2 = new League(2, "El Potato League B", null, null, "Mata-mata", "Futsal", 12, 20, 6, 9, 1, true, null,
 				null, f1);
+		
+		Player p1 = new Player(null, "Alexandre Guedes", "Kokhym", 5, true, "000.000.000-00", "00.000.000-X", null, tm1);
 
-		userRepository.saveAll(Arrays.asList(user1));
+		userRepository.saveAll(Arrays.asList(user1,user2));
 		teamRepository.saveAll(Arrays.asList(tm1, tm2, tm3, tm4, tm5, tm6, tm7, tm8, tm9, tm10, tm11, tm12));
 		leagueRepository.saveAll(Arrays.asList(lg1, lg2));
+		playerRepository.saveAll(Arrays.asList(p1));
 	}
 }

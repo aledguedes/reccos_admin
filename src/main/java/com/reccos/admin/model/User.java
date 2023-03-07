@@ -44,13 +44,19 @@ public class User {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date validationToken;
+	
+	@Column(name = "roles")
+	private String roles;
 
 	public User() {
 		super();
 	}
 
+	
+
 	public User(Long id, @NotBlank @Size(max = 20) String login, @NotBlank @Size(max = 50) @Email String email,
-			@NotBlank @Size(max = 120) String password, Integer federation, String codToken, Date validationToken) {
+			@NotBlank @Size(max = 120) String password, Integer federation, String codToken, Date validationToken,
+			String roles) {
 		super();
 		this.id = id;
 		this.login = login;
@@ -59,7 +65,10 @@ public class User {
 		this.federation = federation;
 		this.codToken = codToken;
 		this.validationToken = validationToken;
+		this.roles = roles;
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -115,6 +124,14 @@ public class User {
 
 	public void setFederation(Integer federation) {
 		this.federation = federation;
+	}
+
+	public String getRoles() {
+		return roles;
+	}
+
+	public void setRoles(String roles) {
+		this.roles = roles;
 	}
 
 }

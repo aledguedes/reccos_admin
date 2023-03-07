@@ -1,6 +1,7 @@
 package com.reccos.admin.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,9 @@ public class Goal {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	@Column(name = "num_goals")
+	private Integer num_goals;
+
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "player_id", nullable = false)
 //	@JsonIgnore
@@ -33,9 +37,10 @@ public class Goal {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Goal(long id, Player player, Match match) {
+	public Goal(long id, Integer num_goals, Player player, Match match) {
 		super();
 		this.id = id;
+		this.num_goals = num_goals;
 		this.player = player;
 		this.match = match;
 	}
@@ -62,6 +67,14 @@ public class Goal {
 
 	public void setMatch(Match match) {
 		this.match = match;
+	}
+
+	public Integer getNum_goals() {
+		return num_goals;
+	}
+
+	public void setNum_goals(Integer num_goals) {
+		this.num_goals = num_goals;
 	}
 
 }

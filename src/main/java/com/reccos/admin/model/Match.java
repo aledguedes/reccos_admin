@@ -42,9 +42,10 @@ public class Match {
 	private Team visiting_team;
 
 //	@ManyToOne
-//	private Team head_referee;
+//	private Refree head_referee;
+
 //	@ManyToOne
-//	private Team assistant_referee;
+//	private Refree assistant_referee;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL, CascadeType.MERGE }, mappedBy = "matches")
 	@JsonIgnore
