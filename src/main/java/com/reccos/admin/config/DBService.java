@@ -8,11 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.reccos.admin.model.Federation;
 import com.reccos.admin.model.League;
+import com.reccos.admin.model.Match;
 import com.reccos.admin.model.Player;
+import com.reccos.admin.model.Round;
 import com.reccos.admin.model.Team;
 import com.reccos.admin.model.User;
 import com.reccos.admin.repository.FederationRepository;
 import com.reccos.admin.repository.LeagueRepository;
+import com.reccos.admin.repository.MatchRepository;
 import com.reccos.admin.repository.PlayerRepository;
 import com.reccos.admin.repository.TeamRepository;
 import com.reccos.admin.repository.UserRepository;
@@ -34,6 +37,9 @@ public class DBService {
 	
 	@Autowired
 	private PlayerRepository playerRepository;
+	
+	@Autowired
+	private MatchRepository matchRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder encoder;
@@ -108,10 +114,13 @@ public class DBService {
 				null, f1);
 		
 		Player p1 = new Player(null, "Alexandre Guedes", "Kokhym", 5, true, "000.000.000-00", "00.000.000-X", null, tm1);
+		
+		Match m1 = new Match(null, 1, null, tm11, tm12, null);
 
 		userRepository.saveAll(Arrays.asList(user1,user2));
 		teamRepository.saveAll(Arrays.asList(tm1, tm2, tm3, tm4, tm5, tm6, tm7, tm8, tm9, tm10, tm11, tm12));
 		leagueRepository.saveAll(Arrays.asList(lg1, lg2));
 		playerRepository.saveAll(Arrays.asList(p1));
+		matchRepository.saveAll(Arrays.asList(m1));
 	}
 }

@@ -27,7 +27,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.reccos.admin.model.Player;
 import com.reccos.admin.service.PlayerService;
-import com.reccos.admin.utils.UploadService;
 
 @CrossOrigin("*")
 @RestController
@@ -36,9 +35,6 @@ public class PlayerController {
 
 	@Autowired
 	private PlayerService service;
-	
-	@Autowired
-	private UploadService uploadService;
 	
 	@GetMapping("/players/{id}")
 	public ResponseEntity<Player> listById(@PathVariable Long id) {
