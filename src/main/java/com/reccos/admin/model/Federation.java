@@ -1,8 +1,9 @@
 package com.reccos.admin.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +12,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -44,9 +48,14 @@ public class Federation {
 	@Column(name = "status")
 	private Boolean status;
 
-	@OneToMany(mappedBy = "federation", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "federation")
 	@JsonIgnoreProperties({ "teams", "rounds" })
-	private List<League> leagues = new ArrayList<>();
+	private List<League> leagues;
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@JoinTable(name = "federation_teams", joinColumns = { @JoinColumn(name = "federation_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "team_id") })
+	private Set<Team> teams = new HashSet<>();
 
 	public Federation() {
 		super();
@@ -119,6 +128,27 @@ public class Federation {
 
 	public void setLeagues(List<League> leagues) {
 		this.leagues = leagues;
+	}
+
+	public Set<Team> getTeams() {
+		return teams;
+	}
+
+	public void setTeams(Set<Team> teams) {
+		this.teams = teams;
+	}
+
+	public void addTag(Team tag) {
+		this.teams.add(tag);
+		tag.getFederation().add(this);
+	}
+
+	public void removeTag(long tagId) {
+		Team tag = this.teams.stream().filter(t -> t.getId() == tagId).findFirst().orElse(null);
+		if (tag != null) {
+			this.teams.remove(tag);
+			tag.getFederation().remove(this);
+		}
 	}
 
 }

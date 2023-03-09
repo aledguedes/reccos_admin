@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.reccos.admin.exceptions.ObjectnotFoundException;
-import com.reccos.admin.model.League;
+import com.reccos.admin.model.Federation;
 import com.reccos.admin.model.Team;
-import com.reccos.admin.repository.LeagueRepository;
+import com.reccos.admin.repository.FederationRepository;
 import com.reccos.admin.repository.TeamRepository;
 import com.reccos.admin.service.TeamService;
 
@@ -34,7 +34,7 @@ public class TeamController {
 	private TeamService service;
 
 	@Autowired
-	private LeagueRepository tutorialRepository;
+	private FederationRepository tutorialRepository;
 
 	@Autowired
 	private TeamRepository teamRepository;
@@ -45,7 +45,7 @@ public class TeamController {
 		return ResponseEntity.ok().body(list);
 	}
 
-	@GetMapping("/leagues/{ligaId}/teams")
+	@GetMapping("/federation/{ligaId}/teams")
 	public ResponseEntity<List<Team>> getAllTagsByTutorialId(@PathVariable(value = "ligaId") Long ligaId) {
 		if (!tutorialRepository.existsById(ligaId)) {
 			throw new ObjectnotFoundException("Not found Tutorial with id = " + ligaId);
@@ -73,13 +73,13 @@ public class TeamController {
 		return ResponseEntity.ok(service.findByName(name));
 	}
 
-	@GetMapping("/teams/{teamId}/leagues")
-	public ResponseEntity<List<League>> getAllTutorialsByTagId(@PathVariable(value = "teamId") Long teamId) {
+	@GetMapping("/teams/{teamId}/federation")
+	public ResponseEntity<List<Federation>> getAllTutorialsByTagId(@PathVariable(value = "teamId") Long teamId) {
 		if (!teamRepository.existsById(teamId)) {
 			throw new ObjectnotFoundException("Not found Tag  with id = " + teamId);
 		}
 
-		List<League> tutorials = tutorialRepository.findLeaguesByTeamsId(teamId);
+		List<Federation> tutorials = tutorialRepository.findFederationByTeamsId(teamId);
 		return new ResponseEntity<>(tutorials, HttpStatus.OK);
 	}
 	
@@ -90,7 +90,7 @@ public class TeamController {
 		return ResponseEntity.created(uri).build();
 	}
 
-	@PostMapping("/leagues/{ligaId}/teams")
+	@PostMapping("/federation/{ligaId}/teams")
 	public ResponseEntity<Team> addTag(@PathVariable(value = "ligaId") Long ligaId,
 			@RequestBody Team tagRequest) {
 		Team tag = tutorialRepository.findById(ligaId).map(tutorial -> {
@@ -123,10 +123,10 @@ public class TeamController {
 		return ResponseEntity.badRequest().build();
 	}
 
-	@DeleteMapping("/leagues/{ligaId}/teams/{teamId}")
+	@DeleteMapping("/federation/{ligaId}/teams/{teamId}")
 	public ResponseEntity<HttpStatus> deleteTagFromTutorial(@PathVariable(value = "ligaId") Long ligaId,
 			@PathVariable(value = "teamId") Long teamId) {
-		League tutorial = tutorialRepository.findById(ligaId)
+		Federation tutorial = tutorialRepository.findById(ligaId)
 				.orElseThrow(() -> new ObjectnotFoundException("Not found Tutorial with id = " + ligaId));
 
 		tutorial.removeTag(teamId);

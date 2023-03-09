@@ -79,7 +79,7 @@ public class Team {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "teams")
 	@JsonIgnore
-	private Set<League> leagues = new HashSet<>();
+	private Set<Federation> federation = new HashSet<>();
 
 	@OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("team")
@@ -89,9 +89,9 @@ public class Team {
 		super();
 	}
 
-		public Team(long id, String name, String surname, LocalDate dt_nascimento, String initials, String president,
+	public Team(long id, String name, String surname, LocalDate dt_nascimento, String initials, String president,
 			String cep, String logradouro, Integer numero, String bairro, String complemento, String cidade, String uf,
-			String img_scudo, String img_stadium, String phone, Boolean status, Set<League> leagues,
+			String img_scudo, String img_stadium, String phone, Boolean status, Set<Federation> federation,
 			List<Contract> contratos) {
 		super();
 		this.id = id;
@@ -111,7 +111,7 @@ public class Team {
 		this.img_stadium = img_stadium;
 		this.phone = phone;
 		this.status = status;
-		this.leagues = leagues;
+		this.federation = federation;
 		this.contratos = contratos;
 	}
 
@@ -139,12 +139,12 @@ public class Team {
 		this.surname = surname;
 	}
 
-	public Set<League> getLeagues() {
-		return leagues;
+	public Set<Federation> getFederation() {
+		return federation;
 	}
 
-	public void setLeagues(Set<League> leagues) {
-		this.leagues = leagues;
+	public void setFederation(Set<Federation> federation) {
+		this.federation = federation;
 	}
 
 	public LocalDate getDt_nascimento() {

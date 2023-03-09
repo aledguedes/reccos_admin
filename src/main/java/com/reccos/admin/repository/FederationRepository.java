@@ -10,4 +10,6 @@ public interface FederationRepository extends JpaRepository<Federation, Long> {
 
 	List<Federation> findByStatus(boolean status);
 
+	List<Federation> findFederationByTeamsId(Long tagId);
+
 }

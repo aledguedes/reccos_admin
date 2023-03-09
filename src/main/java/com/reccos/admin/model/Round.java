@@ -17,7 +17,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "rounds")
@@ -46,17 +45,12 @@ public class Round {
 			@JoinColumn(name = "match_id") })
 	private Set<Match> matches = new HashSet<>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "rounds")
-	@JsonIgnore
-	private Set<League> leagues = new HashSet<>();
-
 	public Round() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Round(Long id, LocalDate dt_start, Long league_idd, LocalDate dt_end, Boolean status, Set<Match> matches,
-			Set<League> leagues) {
+	public Round(Long id, LocalDate dt_start, Long league_idd, LocalDate dt_end, Boolean status, Set<Match> matches) {
 		super();
 		this.id = id;
 		this.dt_start = dt_start;
@@ -64,7 +58,6 @@ public class Round {
 		this.dt_end = dt_end;
 		this.status = status;
 		this.matches = matches;
-		this.leagues = leagues;
 	}
 
 	public Long getId() {
@@ -105,14 +98,6 @@ public class Round {
 
 	public void setMatches(Set<Match> matches) {
 		this.matches = matches;
-	}
-
-	public Set<League> getLeagues() {
-		return leagues;
-	}
-
-	public void setLeagues(Set<League> leagues) {
-		this.leagues = leagues;
 	}
 
 	public Long getLeague_idd() {

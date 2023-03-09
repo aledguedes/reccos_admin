@@ -47,6 +47,10 @@ public class RoundService {
 	public Round createRound(Round obj) {
 		Round newRound = new Round();
 		newRound.setId(obj.getId());
+		newRound.setDt_end(obj.getDt_end());
+		newRound.setDt_start(obj.getDt_start());
+		newRound.setLeague_idd(obj.getLeague_idd());
+		newRound.setStatus(obj.getStatus());
 		newRound.getMatches().addAll(obj.getMatches().stream().map(v -> {
 			Match mm = mService.listById(v.getId());
 			mm.getRounds().add(newRound);

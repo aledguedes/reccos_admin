@@ -1,10 +1,9 @@
 package com.reccos.admin.model;
 
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,9 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -48,30 +46,18 @@ public class League {
 	@Column(name = "max_teams")
 	private Integer max_teams;
 
-	@Column(name = "max_players")
-	private Integer max_players;
-
 	@Column(name = "min_teams")
 	private Integer min_teams;
-
-	@Column(name = "min_players")
-	private Integer min_players;
 
 	@Column(name = "qt_group")
 	private Integer qt_group;
 
 	@Column(name = "status")
 	private Boolean status;
-
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
-	@JoinTable(name = "leagues_teams", joinColumns = { @JoinColumn(name = "league_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "team_id") })
-	private Set<Team> teams = new HashSet<>();
-
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
-	@JoinTable(name = "leagues_rounds", joinColumns = { @JoinColumn(name = "league_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "round_id") })
-	private Set<Round> rounds = new HashSet<>();
+	
+	@OneToMany
+	@JoinColumn(name = "leagues_id")
+	private List<Group> groups;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "federation_id")
@@ -83,8 +69,8 @@ public class League {
 	}
 
 	public League(long id, String name, LocalDate dt_start, LocalDate dt_end, String league_system, String league_mode,
-			Integer max_teams, Integer max_players, Integer min_teams, Integer min_players, Integer qt_group,
-			Boolean status, Set<Team> teams, Set<Round> rounds, Federation federation) {
+			Integer max_teams, Integer min_teams, Integer qt_group, Boolean status, Set<Team> teams, List<Group> groups,
+			Federation federation) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -93,16 +79,13 @@ public class League {
 		this.league_system = league_system;
 		this.league_mode = league_mode;
 		this.max_teams = max_teams;
-		this.max_players = max_players;
 		this.min_teams = min_teams;
-		this.min_players = min_players;
 		this.qt_group = qt_group;
 		this.status = status;
-		this.teams = teams;
-		this.rounds = rounds;
+		this.groups = groups;
 		this.federation = federation;
 	}
-
+ 
 	public Integer getQt_group() {
 		return qt_group;
 	}
@@ -119,28 +102,12 @@ public class League {
 		this.max_teams = max_teams;
 	}
 
-	public Integer getMax_players() {
-		return max_players;
-	}
-
-	public void setMax_players(Integer max_players) {
-		this.max_players = max_players;
-	}
-
 	public Integer getMin_teams() {
 		return min_teams;
 	}
 
 	public void setMin_teams(Integer min_teams) {
 		this.min_teams = min_teams;
-	}
-
-	public Integer getMin_players() {
-		return min_players;
-	}
-
-	public void setMin_players(Integer min_players) {
-		this.min_players = min_players;
 	}
 
 	public long getId() {
@@ -157,14 +124,6 @@ public class League {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Set<Team> getTeams() {
-		return teams;
-	}
-
-	public void setTeams(Set<Team> teams) {
-		this.teams = teams;
 	}
 
 	public LocalDate getDt_start() {
@@ -215,24 +174,11 @@ public class League {
 		this.status = status;
 	}
 
-	public Set<Round> getRounds() {
-		return rounds;
+	public List<Group> getGroups() {
+		return groups;
 	}
 
-	public void setRounds(Set<Round> rounds) {
-		this.rounds = rounds;
-	}
-
-	public void addTag(Team tag) {
-		this.teams.add(tag);
-		tag.getLeagues().add(this);
-	}
-
-	public void removeTag(long tagId) {
-		Team tag = this.teams.stream().filter(t -> t.getId() == tagId).findFirst().orElse(null);
-		if (tag != null) {
-			this.teams.remove(tag);
-			tag.getLeagues().remove(this);
-		}
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
 	}
 }

@@ -1,12 +1,15 @@
 package com.reccos.admin.config;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.reccos.admin.model.Federation;
+import com.reccos.admin.model.Group;
 import com.reccos.admin.model.League;
 import com.reccos.admin.model.Match;
 import com.reccos.admin.model.Player;
@@ -14,6 +17,7 @@ import com.reccos.admin.model.Round;
 import com.reccos.admin.model.Team;
 import com.reccos.admin.model.User;
 import com.reccos.admin.repository.FederationRepository;
+import com.reccos.admin.repository.GroupRepository;
 import com.reccos.admin.repository.LeagueRepository;
 import com.reccos.admin.repository.MatchRepository;
 import com.reccos.admin.repository.PlayerRepository;
@@ -34,12 +38,15 @@ public class DBService {
 
 	@Autowired
 	private FederationRepository federationRepository;
-	
+
 	@Autowired
 	private PlayerRepository playerRepository;
-	
+
 	@Autowired
 	private MatchRepository matchRepository;
+
+	@Autowired
+	private GroupRepository groupRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder encoder;
@@ -103,24 +110,28 @@ public class DBService {
 				"01100-000", "Rua Canindé", 1, "Canindé", null, "São Paulo", "SP",
 				"https://upload.wikimedia.org/wikipedia/pt/6/65/Associa%C3%A7%C3%A3o_Portuguesa_de_Desportos.png", null,
 				"(00) 12345-6789", true, null, null);
-		
+
 		Federation f1 = new Federation(1, "LIGA NORDESTINA DE FUTEBOL", "AGRESTE", null, null, true, null);
 		federationRepository.saveAll(Arrays.asList(f1));
 
-		League lg1 = new League(1, "El Potato League A", null, null, "Mata-mata", "Futsal", 12, 20, 6, 9, 1, true, null,
-				null, f1);
-		
-		League lg2 = new League(2, "El Potato League B", null, null, "Mata-mata", "Futsal", 12, 20, 6, 9, 1, true, null,
-				null, f1);
-		
-		Player p1 = new Player(null, "Alexandre Guedes", "Kokhym", 5, true, "000.000.000-00", "00.000.000-X", null, tm1);
-		
+		League lg1 = new League(1, "El Potato League A", null, null, "Mata-mata", "Futsal", 12, 6, 1, true, null, null,
+				f1);
+
+		League lg2 = new League(2, "El Potato League B", null, null, "Mata-mata", "Futsal", 12, 6, 1, true, null, null,
+				f1);
+
+		Player p1 = new Player(null, "Alexandre Guedes", "Kokhym", 5, true, "000.000.000-00", "00.000.000-X", null,
+				tm1);
+
 		Match m1 = new Match(null, 1, null, tm11, tm12, null);
 
-		userRepository.saveAll(Arrays.asList(user1,user2));
+		Group g1 = new Group(1, "Grupo A", null);
+
+		userRepository.saveAll(Arrays.asList(user1, user2));
 		teamRepository.saveAll(Arrays.asList(tm1, tm2, tm3, tm4, tm5, tm6, tm7, tm8, tm9, tm10, tm11, tm12));
 		leagueRepository.saveAll(Arrays.asList(lg1, lg2));
 		playerRepository.saveAll(Arrays.asList(p1));
 		matchRepository.saveAll(Arrays.asList(m1));
+		groupRepository.saveAll(Arrays.asList(g1));
 	}
 }

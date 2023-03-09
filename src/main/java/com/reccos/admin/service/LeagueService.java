@@ -2,14 +2,14 @@ package com.reccos.admin.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reccos.admin.exceptions.ObjectnotFoundException;
+import com.reccos.admin.model.Group;
 import com.reccos.admin.model.League;
-import com.reccos.admin.model.Team;
+import com.reccos.admin.repository.GroupRepository;
 import com.reccos.admin.repository.LeagueRepository;
 
 @Service
@@ -19,7 +19,7 @@ public class LeagueService {
 	private LeagueRepository leagueRepository;
 
 	@Autowired
-	private TeamService teamService;
+	private GroupRepository groupRepository;
 
 	public League listById(Long id) {
 		Optional<League> obj = leagueRepository.findById(id);
@@ -34,9 +34,9 @@ public class LeagueService {
 		List<League> obj = leagueRepository.findByStatus(status);
 		return obj;
 	}
-	
+
 	public List<League> findByName(String name) {
-		System.out.println("BUSCA POR LETRA: " +name);
+		System.out.println("BUSCA POR LETRA: " + name);
 		return leagueRepository.findByNameContaining(name);
 	}
 
@@ -51,6 +51,7 @@ public class LeagueService {
 
 	public League createLeague(League league) {
 		League newLeague = new League();
+		Group g = new Group();
 
 		newLeague.setId(league.getId());
 		newLeague.setName(league.getName());
@@ -59,21 +60,25 @@ public class LeagueService {
 		newLeague.setLeague_system(league.getLeague_system());
 		newLeague.setLeague_mode(league.getLeague_mode());
 		newLeague.setStatus(league.getStatus());
-		newLeague.setMax_players(league.getMax_players());
-		newLeague.setMin_players(league.getMin_players());
 		newLeague.setMax_teams(league.getMax_teams());
 		newLeague.setMin_teams(league.getMin_teams());
-		if(league.getQt_group() == null) {
+		if (league.getQt_group() == null) {
 			newLeague.setQt_group(1);
 		} else {
 			newLeague.setQt_group(league.getQt_group());
 		}
+		for (int i = 0; i < newLeague.getQt_group(); i++) {
+			g = createGroup(i);
+		}
+		newLeague.getGroups().add(g);
 
-		newLeague.getTeams().addAll(league.getTeams().stream().map(v -> {
-			Team vv = teamService.listById(v.getId());
-			vv.getLeagues().add(newLeague);
-			return vv;
-		}).collect(Collectors.toList()));
 		return leagueRepository.save(newLeague);
+	}
+
+	private Group createGroup(Integer id_g) {
+		System.out.println("DEBUG");
+		Group g = new Group();
+		g.setName_group("Grupo " + id_g);
+		return groupRepository.save(g);
 	}
 }

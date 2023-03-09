@@ -7,8 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.reccos.admin.model.League;
 
 public interface LeagueRepository extends JpaRepository<League, Long> {
-	List<League> findLeaguessByTeamsId(Long tagId);
 	List<League> findByStatus(boolean status);
+
 	List<League> findByNameContaining(String name);
-	List<League> findLeaguesByTeamsId(Long tagId);
 }
