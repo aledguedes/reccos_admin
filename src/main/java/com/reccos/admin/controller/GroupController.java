@@ -3,6 +3,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,15 @@ public class GroupController {
 		Group obj = service.create(arbitro);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@PostMapping("/{ligaId}/leagues")	
+	public ResponseEntity<Group> addTag(@PathVariable(value = "ligaId") Long ligaId,
+			@RequestBody Group tagRequest) {
+		System.out.println("DEBUD ENTREI CONTROLLER: "+tagRequest.getId());
+		Group grp = service.groupByLeague(tagRequest, ligaId);
+
+		return new ResponseEntity<>(grp, HttpStatus.CREATED);
 	}
 	
 	@PutMapping(value = "/{id}")

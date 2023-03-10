@@ -1,9 +1,10 @@
 package com.reccos.admin.model;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,8 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -54,10 +56,11 @@ public class League {
 
 	@Column(name = "status")
 	private Boolean status;
-	
-	@OneToMany
-	@JoinColumn(name = "leagues_id")
-	private List<Group> groups;
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@JoinTable(name = "leagues_groups", joinColumns = { @JoinColumn(name = "leagues_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "team_id") })
+	private Set<Group> groups = new HashSet<>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "federation_id")
@@ -69,7 +72,7 @@ public class League {
 	}
 
 	public League(long id, String name, LocalDate dt_start, LocalDate dt_end, String league_system, String league_mode,
-			Integer max_teams, Integer min_teams, Integer qt_group, Boolean status, Set<Team> teams, List<Group> groups,
+			Integer max_teams, Integer min_teams, Integer qt_group, Boolean status, Set<Group> groups,
 			Federation federation) {
 		super();
 		this.id = id;
@@ -85,7 +88,7 @@ public class League {
 		this.groups = groups;
 		this.federation = federation;
 	}
- 
+
 	public Integer getQt_group() {
 		return qt_group;
 	}
@@ -174,11 +177,16 @@ public class League {
 		this.status = status;
 	}
 
-	public List<Group> getGroups() {
+	public Set<Group> getGroups() {
 		return groups;
 	}
 
-	public void setGroups(List<Group> groups) {
+	public void setGroups(Set<Group> groups) {
 		this.groups = groups;
+	}
+
+	public void addGroup(Group group) {
+		this.groups.add(group);
+		group.getLeague().add(this);
 	}
 }
