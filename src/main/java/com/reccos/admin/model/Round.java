@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -45,12 +46,17 @@ public class Round {
 			@JoinColumn(name = "match_id") })
 	private Set<Match> matches = new HashSet<>();
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "groups_id")
+	private Group group;
+
 	public Round() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Round(Long id, LocalDate dt_start, Long league_idd, LocalDate dt_end, Boolean status, Set<Match> matches) {
+	public Round(Long id, LocalDate dt_start, Long league_idd, LocalDate dt_end, Boolean status, Set<Match> matches,
+			Group group) {
 		super();
 		this.id = id;
 		this.dt_start = dt_start;
@@ -58,6 +64,7 @@ public class Round {
 		this.dt_end = dt_end;
 		this.status = status;
 		this.matches = matches;
+		this.group = group;
 	}
 
 	public Long getId() {
@@ -106,6 +113,14 @@ public class Round {
 
 	public void setLeague_idd(Long league_idd) {
 		this.league_idd = league_idd;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 
 }

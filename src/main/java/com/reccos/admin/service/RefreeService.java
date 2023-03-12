@@ -18,7 +18,7 @@ public class RefreeService {
 	
 	public Refree listById(Long id) {
 		Optional<Refree> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! ID " + id));
+		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! REFREE ID " + id));
 	}
 	
 	public List<Refree> listAll() {

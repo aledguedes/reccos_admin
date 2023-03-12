@@ -23,7 +23,7 @@ public class RoundService {
 
 	public Round listById(Long id) {
 		Optional<Round> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! ID " + id));
+		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! ROUND ID " + id));
 	}
 
 	public List<Round> listAll() {

@@ -20,7 +20,7 @@ public class PlayerService {
 
 	public Player listById(Long id) {
 		Optional<Player> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! ID " + id));
+		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! PLAYER ID " + id));
 	}
 
 	public List<Player> listAll() {

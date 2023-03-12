@@ -18,7 +18,7 @@ public class TeamService {
 
 	public Team listById(Long id) {
 		Optional<Team> obj = teamRepository.findById(id);
-		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! ID " + id));
+		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! TEAM ID " + id));
 	}
 	
 	public List<Team> listByStatus(boolean status) {

@@ -34,7 +34,7 @@ public class LeagueController {
 	private LeagueService lService;
 
 	@GetMapping("/leagues")
-	public ResponseEntity<List<League>> getAllTutorials(@RequestParam(required = false) String title) {
+	public ResponseEntity<List<League>> getAllLeagues() {
 		List<League> list = lService.listAll();
 		return ResponseEntity.ok().body(list);
 	}
@@ -57,9 +57,9 @@ public class LeagueController {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	@PostMapping("/leagues")
-    public ResponseEntity<League> saveLeague(@RequestBody League league) {
-		League obj = lService.createLeague(league);
+	@PostMapping("/leagues/{leagueId}/groups")
+    public ResponseEntity<League> saveLeague(@RequestBody League league, @PathVariable("leagueId") Long leagueId) {
+		League obj = lService.createLeague(league, leagueId);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
     }

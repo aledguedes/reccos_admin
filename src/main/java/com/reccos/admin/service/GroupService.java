@@ -21,7 +21,7 @@ public class GroupService {
 	
 	public Group listById(Long id) { 
 		Optional<Group> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! ID " + id));
+		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! GROUP ID " + id));
 	}
 
 	public List<Group> listAll() {

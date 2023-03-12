@@ -80,6 +80,10 @@ public class Team {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "teams")
 	@JsonIgnore
 	private Set<Federation> federation = new HashSet<>();
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "teams")
+//	@JsonIgnore
+	private Set<League> leagues = new HashSet<>();
 
 	@OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("team")
@@ -92,7 +96,7 @@ public class Team {
 	public Team(long id, String name, String surname, LocalDate dt_nascimento, String initials, String president,
 			String cep, String logradouro, Integer numero, String bairro, String complemento, String cidade, String uf,
 			String img_scudo, String img_stadium, String phone, Boolean status, Set<Federation> federation,
-			List<Contract> contratos) {
+			Set<League> leagues, List<Contract> contratos) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -112,6 +116,7 @@ public class Team {
 		this.phone = phone;
 		this.status = status;
 		this.federation = federation;
+		this.leagues = leagues;
 		this.contratos = contratos;
 	}
 
@@ -265,5 +270,13 @@ public class Team {
 
 	public void setContratos(List<Contract> contratos) {
 		this.contratos = contratos;
+	}
+
+	public Set<League> getLeagues() {
+		return leagues;
+	}
+
+	public void setLeagues(Set<League> leagues) {
+		this.leagues = leagues;
 	}
 }

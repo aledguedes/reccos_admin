@@ -23,7 +23,7 @@ public class ContractService {
 	
 	public Contract listById(Long id) {
 		Optional<Contract> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! ID " + id));
+		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! CONTRACT ID " + id));
 	}
 
 	public List<Contract> listAll() {

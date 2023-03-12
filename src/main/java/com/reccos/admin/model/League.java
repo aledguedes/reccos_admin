@@ -39,6 +39,8 @@ public class League {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dt_end;
 
+	private long idd_fed;
+
 	@Column(name = "league_system")
 	private String league_system;
 
@@ -62,6 +64,11 @@ public class League {
 			@JoinColumn(name = "team_id") })
 	private Set<Group> groups = new HashSet<>();
 
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@JoinTable(name = "leagues_teams", joinColumns = { @JoinColumn(name = "leagues_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "team_id") })
+	private Set<Team> teams = new HashSet<>();
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "federation_id")
 	@JsonIgnore
@@ -71,14 +78,15 @@ public class League {
 		super();
 	}
 
-	public League(long id, String name, LocalDate dt_start, LocalDate dt_end, String league_system, String league_mode,
-			Integer max_teams, Integer min_teams, Integer qt_group, Boolean status, Set<Group> groups,
-			Federation federation) {
+	public League(long id, String name, LocalDate dt_start, LocalDate dt_end, long idd_fed, String league_system,
+			String league_mode, Integer max_teams, Integer min_teams, Integer qt_group, Boolean status,
+			Set<Group> groups, Set<Team> teams, Federation federation) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.dt_start = dt_start;
 		this.dt_end = dt_end;
+		this.idd_fed = idd_fed;
 		this.league_system = league_system;
 		this.league_mode = league_mode;
 		this.max_teams = max_teams;
@@ -86,7 +94,16 @@ public class League {
 		this.qt_group = qt_group;
 		this.status = status;
 		this.groups = groups;
+		this.teams = teams;
 		this.federation = federation;
+	}
+
+	public long getIdd_fed() {
+		return idd_fed;
+	}
+
+	public void setIdd_fed(long idd_fed) {
+		this.idd_fed = idd_fed;
 	}
 
 	public Integer getQt_group() {
@@ -179,6 +196,14 @@ public class League {
 
 	public Set<Group> getGroups() {
 		return groups;
+	}
+
+	public Set<Team> getTeams() {
+		return teams;
+	}
+
+	public void setTeams(Set<Team> teams) {
+		this.teams = teams;
 	}
 
 	public void setGroups(Set<Group> groups) {

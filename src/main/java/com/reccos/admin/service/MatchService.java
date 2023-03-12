@@ -19,7 +19,7 @@ public class MatchService {
 	
 	public Match listById(Long id) {
 		Optional<Match> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! ID " + id));
+		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! MATCH ID " + id));
 	}
 
 	public List<Match> listAll() {
