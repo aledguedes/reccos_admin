@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "rounds")
@@ -48,6 +49,7 @@ public class Round {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "groups_id")
+	@JsonIgnore
 	private Group group;
 
 	public Round() {

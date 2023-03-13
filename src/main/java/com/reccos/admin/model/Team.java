@@ -82,7 +82,7 @@ public class Team {
 	private Set<Federation> federation = new HashSet<>();
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "teams")
-//	@JsonIgnore
+	@JsonIgnore
 	private Set<League> leagues = new HashSet<>();
 
 	@OneToMany(mappedBy = "team", cascade = CascadeType.ALL)

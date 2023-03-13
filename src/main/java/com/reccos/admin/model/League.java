@@ -61,7 +61,7 @@ public class League {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
 	@JoinTable(name = "leagues_groups", joinColumns = { @JoinColumn(name = "leagues_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "team_id") })
+			@JoinColumn(name = "group_id") })
 	private Set<Group> groups = new HashSet<>();
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
