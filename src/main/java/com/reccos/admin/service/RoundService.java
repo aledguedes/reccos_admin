@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reccos.admin.exceptions.ObjectnotFoundException;
+import com.reccos.admin.model.Group;
 import com.reccos.admin.model.Match;
 import com.reccos.admin.model.Round;
 import com.reccos.admin.repository.RoundRepository;
@@ -20,6 +21,9 @@ public class RoundService {
 
 	@Autowired
 	private MatchService mService;
+	
+	@Autowired
+	private GroupService gService;
 
 	public Round listById(Long id) {
 		Optional<Round> obj = repository.findById(id);
@@ -46,11 +50,17 @@ public class RoundService {
 
 	public Round createRound(Round obj) {
 		Round newRound = new Round();
+		Group g = new Group();
+		
+		g = gService.listById(obj.getGroup_idd());
+		System.out.println("DEBUG: IDD_GROUP: "+obj.getGroup_idd());
 		newRound.setId(obj.getId());
 		newRound.setDt_end(obj.getDt_end());
 		newRound.setDt_start(obj.getDt_start());
-		newRound.setLeague_idd(obj.getLeague_idd());
+//		newRound.setLeague_idd(obj.getLeague_idd());
+		newRound.setGroup(g);
 		newRound.setStatus(obj.getStatus());
+		newRound.getGroup();
 		newRound.getMatches().addAll(obj.getMatches().stream().map(v -> {
 			Match mm = mService.listById(v.getId());
 			mm.getRounds().add(newRound);
