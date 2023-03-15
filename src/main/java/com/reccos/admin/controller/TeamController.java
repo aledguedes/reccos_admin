@@ -34,7 +34,7 @@ public class TeamController {
 	private TeamService service;
 
 	@Autowired
-	private FederationRepository tutorialRepository;
+	private FederationRepository federationRepository;
 
 	@Autowired
 	private TeamRepository teamRepository;
@@ -47,7 +47,7 @@ public class TeamController {
 
 	@GetMapping("/federation/{ligaId}/teams")
 	public ResponseEntity<List<Team>> getAllTagsByTutorialId(@PathVariable(value = "ligaId") Long ligaId) {
-		if (!tutorialRepository.existsById(ligaId)) {
+		if (!federationRepository.existsById(ligaId)) {
 			throw new ObjectnotFoundException("Not found Tutorial with id = " + ligaId);
 		}
 
@@ -79,7 +79,7 @@ public class TeamController {
 			throw new ObjectnotFoundException("Not found Tag  with id = " + teamId);
 		}
 
-		List<Federation> tutorials = tutorialRepository.findFederationByTeamsId(teamId);
+		List<Federation> tutorials = federationRepository.findFederationByTeamsId(teamId);
 		return new ResponseEntity<>(tutorials, HttpStatus.OK);
 	}
 	
@@ -93,15 +93,16 @@ public class TeamController {
 	@PostMapping("/federation/{ligaId}/teams")
 	public ResponseEntity<Team> addTag(@PathVariable(value = "ligaId") Long ligaId,
 			@RequestBody Team tagRequest) {
-		Team tag = tutorialRepository.findById(ligaId).map(tutorial -> {
+		Team tag = federationRepository.findById(ligaId).map(tutorial -> {
 			long teamId = tagRequest.getId();
+			System.out.println("DEBUG "+tagRequest.getId());
 
 			// tag is existed
 			if (teamId != 0L) {
 				Team _tag = teamRepository.findById(teamId)
 						.orElseThrow(() -> new ObjectnotFoundException("Not found Tag with id = " + teamId));
 				tutorial.addTag(_tag);
-				tutorialRepository.save(tutorial);
+				federationRepository.save(tutorial);
 				return _tag;
 			}
 
@@ -126,11 +127,11 @@ public class TeamController {
 	@DeleteMapping("/federation/{ligaId}/teams/{teamId}")
 	public ResponseEntity<HttpStatus> deleteTagFromTutorial(@PathVariable(value = "ligaId") Long ligaId,
 			@PathVariable(value = "teamId") Long teamId) {
-		Federation tutorial = tutorialRepository.findById(ligaId)
+		Federation tutorial = federationRepository.findById(ligaId)
 				.orElseThrow(() -> new ObjectnotFoundException("Not found Tutorial with id = " + ligaId));
 
 		tutorial.removeTag(teamId);
-		tutorialRepository.save(tutorial);
+		federationRepository.save(tutorial);
 
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

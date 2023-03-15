@@ -123,7 +123,7 @@ public class DBService {
 		Player p1 = new Player(null, "Alexandre Guedes", "Kokhym", 5, true, "000.000.000-00", "00.000.000-X", null,
 				tm1);
 
-		Match m1 = new Match(null, 1, null, tm11, tm12, null);
+		Match m1 = new Match(null, 1, null, tm11, tm12, null, null, null);
 
 		Group g1 = new Group(1, "Grupo A", null, null);
 		Group g2 = new Group(2, "Grupo B", null, null);
@@ -132,7 +132,7 @@ public class DBService {
 
 		userRepository.saveAll(Arrays.asList(user1, user2));
 		teamRepository.saveAll(Arrays.asList(tm1, tm2, tm3, tm4, tm5, tm6, tm7, tm8, tm9, tm10, tm11, tm12));
-		leagueRepository.saveAll(Arrays.asList(lg1, lg2));
+//		leagueRepository.saveAll(Arrays.asList(lg1, lg2));
 		playerRepository.saveAll(Arrays.asList(p1));
 //		matchRepository.saveAll(Arrays.asList(m1));
 		groupRepository.saveAll(Arrays.asList(g1, g2, g3, g4));

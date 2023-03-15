@@ -41,11 +41,11 @@ public class Match {
 	@JsonIgnoreProperties("contratos")
 	private Team visiting_team;
 
-//	@ManyToOne
-//	private Refree head_referee;
+	@ManyToOne
+	private Refree head_referee;
 
-//	@ManyToOne
-//	private Refree assistant_referee;
+	@ManyToOne
+	private Refree assistant_referee;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL, CascadeType.MERGE }, mappedBy = "matches")
 	@JsonIgnore
@@ -57,13 +57,15 @@ public class Match {
 	}
 
 	public Match(Long id, Integer idd_match, LocalDate match_date, Team home_team, Team visiting_team,
-			Set<Round> rounds) {
+			Refree head_referee, Refree assistant_referee, Set<Round> rounds) {
 		super();
 		this.id = id;
 		this.idd_match = idd_match;
 		this.match_date = match_date;
 		this.home_team = home_team;
 		this.visiting_team = visiting_team;
+		this.head_referee = head_referee;
+		this.assistant_referee = assistant_referee;
 		this.rounds = rounds;
 	}
 
@@ -113,6 +115,22 @@ public class Match {
 
 	public void setRounds(Set<Round> rounds) {
 		this.rounds = rounds;
+	}
+
+	public Refree getHead_referee() {
+		return head_referee;
+	}
+
+	public void setHead_referee(Refree head_referee) {
+		this.head_referee = head_referee;
+	}
+
+	public Refree getAssistant_referee() {
+		return assistant_referee;
+	}
+
+	public void setAssistant_referee(Refree assistant_referee) {
+		this.assistant_referee = assistant_referee;
 	}
 
 }

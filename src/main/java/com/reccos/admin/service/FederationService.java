@@ -38,7 +38,9 @@ public class FederationService {
 	public Federation create(Federation obj) {
 
 		Federation f = new Federation();
-
+		f.setName(obj.getName());
+		f.setSurname(obj.getSurname());
+		f.setStatus(obj.getStatus());
 		f.getTeams().addAll(obj.getTeams().stream().map(v -> {
 			Team vv = teamService.listById(v.getId());
 			vv.getFederation().add(f);

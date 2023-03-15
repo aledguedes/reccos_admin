@@ -54,6 +54,10 @@ public class LeagueService {
 
 	public League update(Long id, League obj) {
 		obj.setId(id);
+		Optional<League> upLeague = leagueRepository.findById(id);
+		obj.setGroups(upLeague.get().getGroups());
+//		obj.setTeams(upLeague.get().getTeams());
+		obj.setFederation(upLeague.get().getFederation());
 		return leagueRepository.save(obj);
 	}
 
