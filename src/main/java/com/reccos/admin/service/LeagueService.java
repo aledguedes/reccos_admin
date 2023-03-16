@@ -76,6 +76,7 @@ public class LeagueService {
 		newLeague.setStatus(league.getStatus());
 		newLeague.setMax_teams(league.getMax_teams());
 		newLeague.setMin_teams(league.getMin_teams());
+		newLeague.setQt_group(league.getQt_group());
 		newLeague.setIdd_fed(id);
 		newLeague.setFederation(f);
 		newLeague.getTeams().addAll(league.getTeams().stream().map(v -> {
