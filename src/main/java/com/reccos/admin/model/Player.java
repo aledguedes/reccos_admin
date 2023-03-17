@@ -26,23 +26,26 @@ public class Player {
 	private String cpf;
 	private String rg;
 	private String img_player;
+	private String team_name;
 
 	public Player() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Player(Long id, String name, String surname, Integer position, Boolean status, String cpf, String rg,
-			String img_player, Team time) {
+	public Player(Long id, String name, String surname, LocalDate dt_nascimento, Integer position, Boolean status,
+			String cpf, String rg, String img_player, String team_name) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
+		this.dt_nascimento = dt_nascimento;
 		this.position = position;
 		this.status = status;
 		this.cpf = cpf;
 		this.rg = rg;
 		this.img_player = img_player;
+		this.team_name = team_name;
 	}
 
 	public Long getId() {
@@ -115,5 +118,13 @@ public class Player {
 
 	public void setImg_player(String img_player) {
 		this.img_player = img_player;
+	}
+
+	public String getTeam_name() {
+		return team_name;
+	}
+
+	public void setTeam_name(String team_name) {
+		this.team_name = team_name;
 	}
 }

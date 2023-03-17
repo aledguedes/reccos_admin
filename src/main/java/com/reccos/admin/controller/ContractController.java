@@ -45,6 +45,13 @@ public class ContractController {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@PostMapping("/contracts/{id_team}/team")
+	public ResponseEntity<Contract> createContractTeamPlayer(@RequestBody Contract contract, @PathVariable("id_team") long id_team) {
+		Contract obj = service.createTeamPlayer(contract, id_team);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
+	
 	@PutMapping("/contracts/{id}")
 	public ResponseEntity<Contract> updateTag(@PathVariable("id") long id, @RequestBody Contract contract) {
 		Contract obj = service.update(id, contract);

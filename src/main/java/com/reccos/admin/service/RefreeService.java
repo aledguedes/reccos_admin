@@ -35,6 +35,11 @@ public class RefreeService {
 		return repository.save(obj);
 	}
 	
+	public Refree createByFederation(Refree obj, long id_federation) {
+		obj.setId(null);
+		return repository.save(obj);
+	}
+	
 	public Refree update(Long id, Refree obj) {
 		obj.setId(id);
 		return repository.save(obj);

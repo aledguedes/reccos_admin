@@ -51,19 +51,23 @@ public class Federation {
 	@OneToMany(mappedBy = "federation")
 	@JsonIgnoreProperties({ "teams", "rounds" })
 	private List<League> leagues;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
 	@JoinTable(name = "federation_teams", joinColumns = { @JoinColumn(name = "federation_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "team_id") })
 	private Set<Team> teams = new HashSet<>();
 
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@JoinTable(name = "federation_refrees", joinColumns = {
+			@JoinColumn(name = "federation_id") }, inverseJoinColumns = { @JoinColumn(name = "refree_id") })
+	private Set<Refree> refrees = new HashSet<>();
+
 	public Federation() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Federation(long id, String name, String surname, LocalDateTime created_at, LocalDateTime update_at,
-			Boolean status, List<League> leagues) {
+			Boolean status, List<League> leagues, Set<Team> teams, Set<Refree> refrees) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -72,6 +76,8 @@ public class Federation {
 		this.update_at = update_at;
 		this.status = status;
 		this.leagues = leagues;
+		this.teams = teams;
+		this.refrees = refrees;
 	}
 
 	public long getId() {
@@ -136,6 +142,14 @@ public class Federation {
 
 	public void setTeams(Set<Team> teams) {
 		this.teams = teams;
+	}
+
+	public Set<Refree> getRefrees() {
+		return refrees;
+	}
+
+	public void setRefrees(Set<Refree> refrees) {
+		this.refrees = refrees;
 	}
 
 	public void addTag(Team tag) {

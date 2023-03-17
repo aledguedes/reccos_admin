@@ -1,10 +1,18 @@
 package com.reccos.admin.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "refrees")
@@ -20,12 +28,17 @@ public class Refree {
 	private String rg;
 	private String img_refree;
 
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "teams")
+	@JsonIgnore
+	private Set<Federation> federation = new HashSet<>();
+
 	public Refree() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Refree(Long id, String name, String surname, Boolean status, String cpf, String rg, String img_refree) {
+	public Refree(Long id, String name, String surname, Boolean status, String cpf, String rg, String img_refree,
+			Set<Federation> federation) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -34,6 +47,7 @@ public class Refree {
 		this.cpf = cpf;
 		this.rg = rg;
 		this.img_refree = img_refree;
+		this.federation = federation;
 	}
 
 	public Long getId() {
@@ -90,6 +104,14 @@ public class Refree {
 
 	public void setImg_refree(String img_refree) {
 		this.img_refree = img_refree;
+	}
+
+	public Set<Federation> getFederation() {
+		return federation;
+	}
+
+	public void setFederation(Set<Federation> federation) {
+		this.federation = federation;
 	}
 
 }

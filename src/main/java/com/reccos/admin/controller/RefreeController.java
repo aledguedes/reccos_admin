@@ -52,6 +52,13 @@ public class RefreeController {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@PostMapping("/{federationId}")
+    public ResponseEntity<Refree> saveLeague(@RequestBody Refree refree, @PathVariable("federationId") Long federationId) {
+		Refree obj = service.createByFederation(refree, federationId);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+    }
+	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Refree> atualizarRefree(@PathVariable Long id, @RequestBody Refree arbitro){
 		Refree obj = service.update(id, arbitro);

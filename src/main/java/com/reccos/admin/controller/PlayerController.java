@@ -113,7 +113,7 @@ public class PlayerController {
 //		return "deu ruim";
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/players/{id}")
 	public ResponseEntity<Player> atualizarTime(@PathVariable Long id, @RequestBody Player atleta){
 		Player obj = service.update(id, atleta);
 		
