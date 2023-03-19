@@ -53,11 +53,9 @@ public class RoundService {
 	}
 
 	public Round createRound(Round obj) {
-		System.out.println("DEBUG: entrou create_round"+obj.getGroup_idd());
 		Round newRound = new Round();
 		Group g = new Group();
 		g = gService.listById(obj.getGroup_idd());
-		System.out.println("DEBUG: entrou create_round");
 		newRound.setDt_end(obj.getDt_end());
 		newRound.setDt_start(obj.getDt_start());
 //		newRound.setLeague_idd(obj.getLeague_idd());
@@ -66,7 +64,6 @@ public class RoundService {
 		newRound.setStatus(obj.getStatus());
 
 		newRound.getMatches().addAll(obj.getMatches().stream().map(v -> {
-			System.out.println("DEBUG: "+v.getId());
 			if (v.getId() == null) { 
 				System.out.println("DEBUG IF: "+v.getId());
 				Match mm = new Match();

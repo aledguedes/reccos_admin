@@ -125,16 +125,16 @@ public class DBService {
 
 		Match m1 = new Match(null, 1, null, tm11, tm12, null, null, null);
 
-		Group g1 = new Group(1, "Grupo A", null, null);
-		Group g2 = new Group(2, "Grupo B", null, null);
-		Group g3 = new Group(3, "Grupo C", null, null);
-		Group g4 = new Group(4, "Grupo D", null, null);
+		Group g1 = new Group(1, "Grupo A", null, null, null);
+		Group g2 = new Group(2, "Grupo B", null, null, null);
+		Group g3 = new Group(3, "Grupo C", null, null, null);
+		Group g4 = new Group(4, "Grupo D", null, null, null);
 
 		userRepository.saveAll(Arrays.asList(user1, user2));
 		teamRepository.saveAll(Arrays.asList(tm1, tm2, tm3, tm4, tm5, tm6, tm7, tm8, tm9, tm10, tm11, tm12));
-//		leagueRepository.saveAll(Arrays.asList(lg1, lg2));
+		leagueRepository.saveAll(Arrays.asList(lg1));
 		playerRepository.saveAll(Arrays.asList(p1));
 //		matchRepository.saveAll(Arrays.asList(m1));
-//		groupRepository.saveAll(Arrays.asList(g1, g2, g3, g4));
+		groupRepository.saveAll(Arrays.asList(g1));
 	}
 }

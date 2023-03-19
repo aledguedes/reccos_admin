@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -36,18 +37,24 @@ public class Group {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "groups")
 	@JsonIgnore
 	private Set<League> league = new HashSet<>();
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@JoinTable(name = "group_teams", joinColumns = { @JoinColumn(name = "group_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "team_id") })
+	private Set<Team> teams = new HashSet<>();
 
 	public Group() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Group(long id, String name_group, List<Round> rounds, Set<League> league) {
+	public Group(long id, String name_group, List<Round> rounds, Set<League> league, Set<Team> teams) {
 		super();
 		this.id = id;
 		this.name_group = name_group;
 		this.rounds = rounds;
 		this.league = league;
+		this.teams = teams;
 	}
 
 	public Set<League> getLeague() {
@@ -80,6 +87,14 @@ public class Group {
 
 	public void setRounds(List<Round> rounds) {
 		this.rounds = rounds;
+	}
+
+	public Set<Team> getTeams() {
+		return teams;
+	}
+
+	public void setTeams(Set<Team> teams) {
+		this.teams = teams;
 	}
 
 }
