@@ -63,4 +63,8 @@ public class MatchService {
 	    Iterable<Match> persistedUser = repository.saveAll(matches);
 		return repository.saveAll(persistedUser);
 	}
+
+	public List<Match> matchIdTeam(long id) {
+		return repository.findMatchByHomeId(id);
+	}
 }

@@ -35,11 +35,11 @@ public class Match {
 
 	@ManyToOne
 	@JsonIgnoreProperties("contratos")
-	private Team home_team;
+	private Team home;
 
 	@ManyToOne
 	@JsonIgnoreProperties("contratos")
-	private Team visiting_team;
+	private Team visiting;
 
 	@ManyToOne
 	private Refree head_referee;
@@ -56,14 +56,14 @@ public class Match {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Match(Long id, Integer idd_match, LocalDate match_date, Team home_team, Team visiting_team,
-			Refree head_referee, Refree assistant_referee, Set<Round> rounds) {
+	public Match(Long id, Integer idd_match, LocalDate match_date, Team home, Team visiting, Refree head_referee,
+			Refree assistant_referee, Set<Round> rounds) {
 		super();
 		this.id = id;
 		this.idd_match = idd_match;
 		this.match_date = match_date;
-		this.home_team = home_team;
-		this.visiting_team = visiting_team;
+		this.home = home;
+		this.visiting = visiting;
 		this.head_referee = head_referee;
 		this.assistant_referee = assistant_referee;
 		this.rounds = rounds;
@@ -93,20 +93,20 @@ public class Match {
 		this.match_date = match_date;
 	}
 
-	public Team getHome_team() {
-		return home_team;
+	public Team getHome() {
+		return home;
 	}
 
-	public void setHome_team(Team home_team) {
-		this.home_team = home_team;
+	public void setHome(Team home) {
+		this.home = home;
 	}
 
-	public Team getVisiting_team() {
-		return visiting_team;
+	public Team getVisiting() {
+		return visiting;
 	}
 
-	public void setVisiting_team(Team visiting_team) {
-		this.visiting_team = visiting_team;
+	public void setVisiting(Team visiting) {
+		this.visiting = visiting;
 	}
 
 	public Set<Round> getRounds() {

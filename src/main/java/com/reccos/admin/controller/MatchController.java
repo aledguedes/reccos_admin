@@ -31,6 +31,12 @@ public class MatchController {
 		List<Match> list = service.listAll();
 		return ResponseEntity.ok().body(list);
 	}
+	
+	@GetMapping("/matches/{id}/teams")
+	public ResponseEntity<List<Match>> matchByTeamId(@PathVariable("id") long id) {
+		List<Match> list = service.matchIdTeam(id);
+		return ResponseEntity.ok().body(list);
+	}
 
 	@GetMapping("/matches/{id}")
 	public ResponseEntity<Match> getTutorialById(@PathVariable("id") long id) {

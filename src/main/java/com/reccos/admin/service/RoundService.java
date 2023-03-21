@@ -68,10 +68,10 @@ public class RoundService {
 				System.out.println("DEBUG IF: "+v.getId());
 				Match mm = new Match();
 				mm.setMatch_date(v.getMatch_date());
-				Team team_home = teamService.listById(v.getVisiting_team().getId());
-				Team team_visiting = teamService.listById(v.getHome_team().getId());
-				mm.setHome_team(team_home);
-				mm.setVisiting_team(team_visiting);
+				Team team_home = teamService.listById(v.getHome().getId());
+				Team team_visiting = teamService.listById(v.getHome().getId());
+				mm.setHome(team_home);
+				mm.setVisiting(team_visiting);
 				mm.getRounds().add(newRound);
 				return mm;
 			} else {

@@ -45,9 +45,7 @@ public class PlayerService {
 	}
 
 	public Player create(Player obj) {
-		obj.setId(null); 
-
-		System.out.println("DEBUG OBJ: " + obj.getId());
+		obj.setId(null);
 		return repository.save(obj);
 	}
 
