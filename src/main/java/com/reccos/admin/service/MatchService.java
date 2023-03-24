@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.reccos.admin.exceptions.ObjectnotFoundException;
@@ -25,19 +28,11 @@ public class MatchService {
 	public List<Match> listAll() {
 		return repository.findAll();
 	}
-	
-//	public List<Match> searchByChar(String letra) {
-//		return repository.findByNameStartingWith(letra);
-//	}
-//	
-//	public List<Match> findByName(String name) {
-//		return repository.findByNameContaining(name);
-//	}
-//
-//	public List<Match> listByStatus(boolean status) {
-//		List<Match> obj = repository.findByStatus(status);
-//		return obj;
-//	}
+
+	public Page<Match> allMatchesPage(int page, int size) {
+		Pageable paging = PageRequest.of(page, size);
+		return repository.findAll(paging);
+	}
 
 	public Match createNow(Match obj) {
 		obj.setId(null);
@@ -64,7 +59,8 @@ public class MatchService {
 		return repository.saveAll(persistedUser);
 	}
 
-	public List<Match> matchIdTeam(long id) {
-		return repository.findMatchByHomeId(id);
+	public List<Match> matchIdTeam(long id, int page, int size) {
+		Pageable paging = PageRequest.of(page, size);
+		return repository.findMatchByHomeId(id, paging);
 	}
 }

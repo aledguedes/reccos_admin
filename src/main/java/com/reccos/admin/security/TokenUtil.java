@@ -22,7 +22,7 @@ public class TokenUtil {
 	private static final String EMISSOR = "Reccos";
 	private static final String TOKEN_HEADER = "Bearer ";
 	private static final String SECRET_KEY = "*N@tur@55pW3bS3cur1tyT0k3n202101";
-	private static final long EXPIRATION = 120 * 60 * 1000;
+	private static final long EXPIRATION = (1440 * 60 * 1000);
 //	private static final long EXPIRATION = 1000 * 60;
 //	private static final String HEADER_AUTH = "Authorization";
 

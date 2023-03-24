@@ -1,4 +1,5 @@
 package com.reccos.admin.service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,11 +16,11 @@ public class GroupService {
 
 	@Autowired
 	private GroupRepository repository;
-	
+
 	@Autowired
 	private LeagueRepository leagueRepository;
-	
-	public Group listById(Long id) { 
+
+	public Group listById(Long id) {
 		Optional<Group> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! GROUP ID " + id));
 	}
@@ -35,15 +36,19 @@ public class GroupService {
 
 	public Group update(Long id, Group obj) {
 		obj.setId(id);
+		if (obj.getTeams().size() == 0) {
+			Group g = listById(id);
+			obj.setTeams(g.getTeams());
+		}
 		return repository.save(obj);
 	}
-	
+
 	public Group groupByLeague(Group obj, Long id) {
-		System.out.println("DEBUD ENTREI SERVICE ID: "+obj.getName_group());
+		System.out.println("DEBUD ENTREI SERVICE ID: " + obj.getName_group());
 		Group grupo = leagueRepository.findById(id).map(v -> {
 			long grpId = obj.getId();
-			System.out.println("DEBUD ENTREI SERVICE"+grpId);
-			
+			System.out.println("DEBUD ENTREI SERVICE" + grpId);
+
 			if (grpId != 0L) {
 				Group _grp = repository.findById(grpId)
 						.orElseThrow(() -> new ObjectnotFoundException("Not found Tag with id = " + grpId));

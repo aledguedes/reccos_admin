@@ -26,7 +26,7 @@ public class GroupController {
 	@Autowired
 	private GroupService service;
 	
-	@GetMapping(value = "/{id}")	
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<Group> listById(@PathVariable Long id) {
 		Group arbitro = service.listById(id);
 		return ResponseEntity.ok().body(arbitro);
@@ -45,10 +45,9 @@ public class GroupController {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@PostMapping("/{ligaId}/leagues")	
+	@PostMapping("/{ligaId}/leagues")
 	public ResponseEntity<Group> addTag(@PathVariable(value = "ligaId") Long ligaId,
 			@RequestBody Group tagRequest) {
-		System.out.println("DEBUD ENTREI CONTROLLER: "+tagRequest.getId());
 		Group grp = service.groupByLeague(tagRequest, ligaId);
 
 		return new ResponseEntity<>(grp, HttpStatus.CREATED);
@@ -56,6 +55,7 @@ public class GroupController {
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Group> atualizarGroup(@PathVariable Long id, @RequestBody Group arbitro){
+		System.out.println("UPDATE GROUP CONTROLLER");
 		Group obj = service.update(id, arbitro);
 		
 		if(obj != null) {
@@ -63,4 +63,6 @@ public class GroupController {
 		}
 		return ResponseEntity.badRequest().build();
 	}
+	
+	
 }

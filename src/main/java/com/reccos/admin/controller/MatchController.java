@@ -27,14 +27,19 @@ public class MatchController {
 	private MatchService service;
 
 	@GetMapping("/matches")
-	public ResponseEntity<List<Match>> getAllTutorials(@RequestParam(required = false) String title) {
+	public ResponseEntity<List<Match>> getMatches(
+			@RequestParam (value = "page", required = false, defaultValue = "0") int page,
+			@RequestParam (value = "size", required = false, defaultValue = "12") int size) {
 		List<Match> list = service.listAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping("/matches/{id}/teams")
-	public ResponseEntity<List<Match>> matchByTeamId(@PathVariable("id") long id) {
-		List<Match> list = service.matchIdTeam(id);
+	public ResponseEntity<List<Match>> matchByTeamId(
+			@PathVariable("id") long id,
+			@RequestParam (value = "page", required = false, defaultValue = "0") int page,
+			@RequestParam (value = "size", required = false, defaultValue = "12") int size) {
+		List<Match> list = service.matchIdTeam(id, page, size);
 		return ResponseEntity.ok().body(list);
 	}
 

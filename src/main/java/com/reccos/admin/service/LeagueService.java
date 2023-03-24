@@ -81,6 +81,7 @@ public class LeagueService {
 		newLeague.setFederation(f);
 		newLeague.getTeams().addAll(league.getTeams().stream().map(v -> {
 			Team mm = teamService.listById(v.getId());
+			System.out.println("DEBUD ID_TEAM"+mm.getId());
 			mm.getLeagues().add(newLeague);
 			return mm;
 		}).collect(Collectors.toList()));

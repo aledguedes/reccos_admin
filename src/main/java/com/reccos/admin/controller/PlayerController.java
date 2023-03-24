@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,18 +57,12 @@ public class PlayerController {
 		System.out.println("key = " + name);
 		return ResponseEntity.ok(service.findByName(name));
 	}
-
 	
 	@GetMapping("/players")
-	public ResponseEntity<List<Player>> listarTodos(){
-		List<Player> list = service.listAll();
-		return ResponseEntity.ok().body(list);
-	}
-
-	
-	@GetMapping("/players/paginate")
-	public ResponseEntity<Page<Player>> listarTodos(Pageable pageable){
-		Page<Player> list = service.listAllPaginate(pageable);
+	public ResponseEntity<Page<Player>> listarTodos(
+			@RequestParam (value = "page", required = false, defaultValue = "0") int page,
+			@RequestParam (value = "size", required = false, defaultValue = "12") int size){
+		Page<Player> list = service.listAllPaginate(page, size);
 		return ResponseEntity.ok().body(list);
 	}
 	

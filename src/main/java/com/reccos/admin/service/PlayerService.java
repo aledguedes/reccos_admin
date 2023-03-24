@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +23,10 @@ public class PlayerService {
 		Optional<Player> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! PLAYER ID " + id));
 	}
-
-	public List<Player> listAll() {
-		return repository.findAll();
-	}
 	
-	public Page<Player> listAllPaginate(Pageable pageable) {
-		return repository.findAll(pageable);
+	public Page<Player> listAllPaginate(int page, int size) {
+		Pageable paging = PageRequest.of(page, size);
+		return repository.findAll(paging);
 	}
 
 	public List<Player> searchByChar(String letra) {

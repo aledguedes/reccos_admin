@@ -1,8 +1,6 @@
 package com.reccos.admin.config;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,14 +11,12 @@ import com.reccos.admin.model.Group;
 import com.reccos.admin.model.League;
 import com.reccos.admin.model.Match;
 import com.reccos.admin.model.Player;
-import com.reccos.admin.model.Round;
 import com.reccos.admin.model.Team;
 import com.reccos.admin.model.User;
 import com.reccos.admin.repository.FederationRepository;
 import com.reccos.admin.repository.GroupRepository;
 import com.reccos.admin.repository.LeagueRepository;
 import com.reccos.admin.repository.MatchRepository;
-import com.reccos.admin.repository.PlayerRepository;
 import com.reccos.admin.repository.TeamRepository;
 import com.reccos.admin.repository.UserRepository;
 
@@ -39,8 +35,8 @@ public class DBService {
 	@Autowired
 	private FederationRepository federationRepository;
 
-	@Autowired
-	private PlayerRepository playerRepository;
+//	@Autowired
+//	private PlayerRepository playerRepository;
 
 	@Autowired
 	private MatchRepository matchRepository;
@@ -132,9 +128,9 @@ public class DBService {
 
 		userRepository.saveAll(Arrays.asList(user1, user2));
 		teamRepository.saveAll(Arrays.asList(tm1, tm2, tm3, tm4, tm5, tm6, tm7, tm8, tm9, tm10, tm11, tm12));
-		leagueRepository.saveAll(Arrays.asList(lg1));
+//		leagueRepository.saveAll(Arrays.asList(lg1));
 //		playerRepository.saveAll(Arrays.asList(p1));
 //		matchRepository.saveAll(Arrays.asList(m1));
-		groupRepository.saveAll(Arrays.asList(g1));
+//		groupRepository.saveAll(Arrays.asList(g1));
 	}
 }
