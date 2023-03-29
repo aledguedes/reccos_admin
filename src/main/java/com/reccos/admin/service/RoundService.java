@@ -69,7 +69,7 @@ public class RoundService {
 				Match mm = new Match();
 				mm.setMatch_date(v.getMatch_date());
 				Team team_home = teamService.listById(v.getHome().getId());
-				Team team_visiting = teamService.listById(v.getHome().getId());
+				Team team_visiting = teamService.listById(v.getVisiting().getId());
 				mm.setHome(team_home);
 				mm.setVisiting(team_visiting);
 				mm.getRounds().add(newRound);

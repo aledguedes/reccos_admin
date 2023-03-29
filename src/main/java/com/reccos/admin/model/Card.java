@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "cards")
 public class Card {
@@ -19,17 +21,19 @@ public class Card {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(name = "card_color", length = 1)
-	private String card_color;
+	@Column(name = "yellow_card")
+	private Integer yellow_card;
+
+	@Column(name = "red_card")
+	private Integer red_card;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "player_id", nullable = false)
-//	@JsonIgnore
 	private Player player;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "match_id", nullable = false)
-//	@JsonIgnore
+	@JsonIgnoreProperties({ "home", "visiting" })
 	private Match match;
 
 	public Card() {
@@ -37,10 +41,11 @@ public class Card {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Card(long id, String card_color, Player player, Match match) {
+	public Card(long id, Integer yellow_card, Integer red_card, Player player, Match match) {
 		super();
 		this.id = id;
-		this.card_color = card_color;
+		this.yellow_card = yellow_card;
+		this.red_card = red_card;
 		this.player = player;
 		this.match = match;
 	}
@@ -53,12 +58,20 @@ public class Card {
 		this.id = id;
 	}
 
-	public String getCard_color() {
-		return card_color;
+	public Integer getYellow_card() {
+		return yellow_card;
 	}
 
-	public void setCard_color(String card_color) {
-		this.card_color = card_color;
+	public void setYellow_card(Integer yellow_card) {
+		this.yellow_card = yellow_card;
+	}
+
+	public Integer getRed_card() {
+		return red_card;
+	}
+
+	public void setRed_card(Integer red_card) {
+		this.red_card = red_card;
 	}
 
 	public Player getPlayer() {
@@ -76,7 +89,5 @@ public class Card {
 	public void setMatch(Match match) {
 		this.match = match;
 	}
-	
-	
 
 }

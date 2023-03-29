@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.reccos.admin.exceptions.ObjectnotFoundException;
 import com.reccos.admin.model.Goal;
+import com.reccos.admin.model.Match;
+import com.reccos.admin.model.Player;
 import com.reccos.admin.repository.GoalRepository;
 
 @Service
@@ -16,6 +18,13 @@ public class GoalService {
 	
 	@Autowired
 	private GoalRepository repository;
+	
+	@Autowired
+	private MatchService matchService;
+	
+	@Autowired
+	private PlayerService playerService;
+	
 	
 	public Goal listById(Long id) {
 		Optional<Goal> obj = repository.findById(id);
@@ -27,7 +36,10 @@ public class GoalService {
 	}
 
 	public Goal create(Goal obj) {
-//		obj.setId(null);
+		Match m = matchService.listById(obj.getMatch().getId());
+		Player p = playerService.listById(obj.getPlayer().getId());
+		obj.setMatch(m);
+		obj.setPlayer(p);
 		return repository.save(obj);
 	}
 

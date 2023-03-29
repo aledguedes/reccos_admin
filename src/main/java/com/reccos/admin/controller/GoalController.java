@@ -26,17 +26,11 @@ public class GoalController {
 	@Autowired
 	private GoalService service;
 	
-	@GetMapping(value = "/{id}")	
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<Goal> listById(@PathVariable Long id) {
 		Goal arbitro = service.listById(id);
 		return ResponseEntity.ok().body(arbitro);
 	}
-	
-//	@GetMapping(value = "/status/{status}")
-//	public ResponseEntity<List<Goal>> listByStatus(@PathVariable Boolean status) {
-//		List<Goal> list = service.listByStatus(status);
-//		return ResponseEntity.ok().body(list);
-//	}
 	
 	@GetMapping
 	public ResponseEntity<List<Goal>> listarTodos(){

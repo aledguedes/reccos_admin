@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.reccos.admin.exceptions.ObjectnotFoundException;
 import com.reccos.admin.model.Card;
+import com.reccos.admin.model.Match;
+import com.reccos.admin.model.Player;
 import com.reccos.admin.repository.CardRepository;
 
 @Service
@@ -15,6 +17,12 @@ public class CardService {
 
 	@Autowired
 	private CardRepository repository;
+	
+	@Autowired
+	private MatchService matchService;
+	
+	@Autowired
+	private PlayerService playerService;
 	
 	public Card listById(Long id) {
 		Optional<Card> obj = repository.findById(id);
@@ -26,12 +34,19 @@ public class CardService {
 	}
 
 	public Card create(Card obj) {
-//		obj.setId(null);
+		Match m = matchService.listById(obj.getMatch().getId());
+		Player p = playerService.listById(obj.getPlayer().getId());
+		obj.setMatch(m);
+		obj.setPlayer(p);
 		return repository.save(obj);
 	}
 
 	public Card update(Long id, Card obj) {
 		obj.setId(id);
+		Match m = matchService.listById(obj.getMatch().getId());
+		Player p = playerService.listById(obj.getPlayer().getId());
+		obj.setMatch(m);
+		obj.setPlayer(p);
 		return repository.save(obj);
 	}
 

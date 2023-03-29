@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "goals")
 public class Goal {
@@ -29,7 +31,7 @@ public class Goal {
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "match_id", nullable = false)
-//	@JsonIgnore
+	@JsonIgnoreProperties({"home", "visiting"})
 	private Match match;
 
 	public Goal() {
