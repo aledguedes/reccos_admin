@@ -51,14 +51,19 @@ public class Round {
 	@JoinColumn(name = "groups_id")
 	@JsonIgnore
 	private Group group;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "leagues_id")
+	@JsonIgnore
+	private League league;
 
 	public Round() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Round(Long id, LocalDate dt_start, Long league_idd, Long group_idd, LocalDate dt_end, Boolean status,
-			Set<Match> matches, Group group) {
+	public Round(Long id, LocalDate dt_start, Long group_idd, LocalDate dt_end, Boolean status, Set<Match> matches,
+			Group group, League league) {
 		super();
 		this.id = id;
 		this.dt_start = dt_start;
@@ -67,6 +72,7 @@ public class Round {
 		this.status = status;
 		this.matches = matches;
 		this.group = group;
+		this.league = league;
 	}
 
 	public Long getId() {
@@ -123,6 +129,14 @@ public class Round {
 
 	public void setGroup(Group group) {
 		this.group = group;
+	}
+
+	public League getLeague() {
+		return league;
+	}
+
+	public void setLeague(League league) {
+		this.league = league;
 	}
 
 }

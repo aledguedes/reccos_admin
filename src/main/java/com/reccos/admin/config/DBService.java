@@ -128,9 +128,9 @@ public class DBService {
 
 		userRepository.saveAll(Arrays.asList(user1, user2));
 		teamRepository.saveAll(Arrays.asList(tm1, tm2, tm3, tm4, tm5, tm6, tm7, tm8, tm9, tm10, tm11, tm12));
-//		leagueRepository.saveAll(Arrays.asList(lg1));
+//		leagueRepository.saveAll(Arrays.asList(lg1, lg2));
 //		playerRepository.saveAll(Arrays.asList(p1));
 //		matchRepository.saveAll(Arrays.asList(m1));
-//		groupRepository.saveAll(Arrays.asList(g1));
+//		groupRepository.saveAll(Arrays.asList(g1, g2));
 	}
 }

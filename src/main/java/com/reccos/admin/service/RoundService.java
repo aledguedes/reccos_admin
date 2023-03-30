@@ -5,10 +5,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.reccos.admin.exceptions.ObjectnotFoundException;
 import com.reccos.admin.model.Group;
+import com.reccos.admin.model.League;
 import com.reccos.admin.model.Match;
 import com.reccos.admin.model.Round;
 import com.reccos.admin.model.Team;
@@ -28,6 +32,9 @@ public class RoundService {
 
 	@Autowired
 	private GroupService gService;
+	
+	@Autowired
+	private LeagueService leagueService;
 
 	public Round listById(Long id) {
 		Optional<Round> obj = repository.findById(id);
@@ -36,6 +43,11 @@ public class RoundService {
 
 	public List<Round> listAll() {
 		return repository.findAll();
+	}
+	
+	public Page<Round> listAllPaginate(int page, int size) {
+		Pageable paging = PageRequest.of(page, size);
+		return repository.findAll(paging);
 	}
 
 	public Round create(Round obj) {
@@ -52,9 +64,10 @@ public class RoundService {
 		repository.deleteById(id);
 	}
 
-	public Round createRound(Round obj) {
+	public Round createRound(Round obj, long id) {
 		Round newRound = new Round();
 		Group g = new Group();
+		League l = leagueService.listById(id);
 		g = gService.listById(obj.getGroup_idd());
 		newRound.setDt_end(obj.getDt_end());
 		newRound.setDt_start(obj.getDt_start());
@@ -62,6 +75,7 @@ public class RoundService {
 		newRound.setGroup_idd(obj.getGroup_idd());
 		newRound.setGroup(g);
 		newRound.setStatus(obj.getStatus());
+		newRound.setLeague(l);
 
 		newRound.getMatches().addAll(obj.getMatches().stream().map(v -> {
 			if (v.getId() == null) { 
@@ -82,5 +96,10 @@ public class RoundService {
 		}).collect(Collectors.toList()));
 
 		return repository.save(newRound);
+	}
+
+	public Page<Round> roundIdLeague(long id, int page, int size) {
+		Pageable paging = PageRequest.of(page, size);
+		return repository.findRoundByLeagueId(id, paging);
 	}
 }

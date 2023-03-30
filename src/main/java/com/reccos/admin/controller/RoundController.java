@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +27,17 @@ public class RoundController {
 	@Autowired
 	private RoundService service;
 
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<Round>> getAllTutorials(@RequestParam(required = false) String title) {
 		List<Round> list = service.listAll();
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping
+	public ResponseEntity<Page<Round>> listAllPagiante(
+			@RequestParam (value = "page", required = false, defaultValue = "0") int page,
+			@RequestParam (value = "size", required = false, defaultValue = "12") int size){
+		Page<Round> list = service.listAllPaginate(page, size);
 		return ResponseEntity.ok().body(list);
 	}
 
@@ -37,11 +46,19 @@ public class RoundController {
 		Round obj = service.listById(id);
 		return ResponseEntity.ok().body(obj);
 	}
+	
+	@GetMapping("/{id}/leagues")
+	public ResponseEntity<Page<Round>> matchByTeamId(
+			@PathVariable("id") long id,
+			@RequestParam (value = "page", required = false, defaultValue = "0") int page,
+			@RequestParam (value = "size", required = false, defaultValue = "12") int size) {
+		Page<Round> list = service.roundIdLeague(id, page, size);
+		return ResponseEntity.ok().body(list);
+	}
 
-	@PostMapping
-	public ResponseEntity<Round> createRound(@RequestBody Round organization) {
-		System.out.println("que vem? " + organization);
-		Round obj = service.createRound(organization);
+	@PostMapping("/{id_league}")
+	public ResponseEntity<Round> createRound(@RequestBody Round organization, @PathVariable("id_league") long id_league) {
+		Round obj = service.createRound(organization, id_league);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 //		return new ResponseEntity<>(service.create(organization), HttpStatus.CREATED);

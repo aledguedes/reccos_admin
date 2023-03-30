@@ -44,15 +44,13 @@ public class User {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date validationToken;
-	
+
 	@Column(name = "roles")
 	private String roles;
 
 	public User() {
 		super();
 	}
-
-	
 
 	public User(Long id, @NotBlank @Size(max = 20) String login, @NotBlank @Size(max = 50) @Email String email,
 			@NotBlank @Size(max = 120) String password, Integer federation, String codToken, Date validationToken,
@@ -67,8 +65,6 @@ public class User {
 		this.validationToken = validationToken;
 		this.roles = roles;
 	}
-
-
 
 	public Long getId() {
 		return id;
