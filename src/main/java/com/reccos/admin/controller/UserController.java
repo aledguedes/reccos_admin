@@ -1,6 +1,7 @@
 package com.reccos.admin.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.reccos.admin.model.Player;
 import com.reccos.admin.model.User;
 import com.reccos.admin.security.AuthToken;
 import com.reccos.admin.security.TokenUtil;
@@ -38,7 +41,16 @@ public class UserController {
 			return ResponseEntity.ok(jwtToken);
 		}
 		return ResponseEntity.status(403).build();
-
+	}
+	
+	@GetMapping("/users/find")
+	public ResponseEntity<User> userEmail(@RequestParam (name="email") String email) {
+		System.out.println("EMAIL:"+email);
+		User newUser = service.userByEmail(email);
+		if (newUser != null) {
+			return ResponseEntity.ok(newUser);
+		}
+		return ResponseEntity.status(403).build();
 	}
 
 	@GetMapping("/users")
@@ -57,7 +69,6 @@ public class UserController {
 
 	@PostMapping("/users/forgot")
 	public String forgotPass(@RequestBody User usuario) {
-		System.out.println("DEBUG CONTROLLER EMAIL: " + usuario.getEmail());
 		return service.recuperarSenha(usuario.getEmail());
 	}
 

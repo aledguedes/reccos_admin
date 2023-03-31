@@ -36,6 +36,10 @@ public class UserService {
 		}
 		return null;
 	}
+	
+	public User userByEmail(String user) {
+		return repository.findByEmail(user);
+	}
 
 	public ArrayList<User> getAll() {
 		return (ArrayList<User>) repository.findAll();

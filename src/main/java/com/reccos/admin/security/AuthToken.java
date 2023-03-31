@@ -11,9 +11,5 @@ public class AuthToken {
 	public void setToken(String token) {
 		this.token = token;
 	}
-
-	
-	
-	
 	
 }
