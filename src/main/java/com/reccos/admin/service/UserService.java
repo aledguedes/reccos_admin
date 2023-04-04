@@ -29,8 +29,8 @@ public class UserService {
 		User user = repository.findByEmailOrPassword(original.getEmail(), original.getPassword());
 		if (user != null) {
 			if (user.getPassword().equals(original.getPassword()) && user.getEmail().equals(original.getEmail())) {
-				user.setPassword(null);
-				user.setEmail(null);
+//				user.setPassword(null);
+//				user.setEmail(null);
 				return user;
 			}
 		}
