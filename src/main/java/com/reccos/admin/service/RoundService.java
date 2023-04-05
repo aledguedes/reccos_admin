@@ -73,6 +73,7 @@ public class RoundService {
 		newRound.setDt_start(obj.getDt_start());
 //		newRound.setLeague_idd(obj.getLeague_idd());
 		newRound.setGroup_idd(obj.getGroup_idd());
+		newRound.setNum_round(obj.getNum_round());
 		newRound.setGroup(g);
 		newRound.setStatus(obj.getStatus());
 		newRound.setLeague(l);
