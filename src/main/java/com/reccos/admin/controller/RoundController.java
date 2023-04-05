@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,5 +63,15 @@ public class RoundController {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 //		return new ResponseEntity<>(service.create(organization), HttpStatus.CREATED);
+	}
+	
+	@PutMapping("/{id_round}/complete")
+	public ResponseEntity<Round> finishRound(@PathVariable Long id_round, @RequestBody Round round){
+		Round obj = service.finishRound(id_round, round);
+		
+		if(obj != null) {
+			return ResponseEntity.ok(obj);
+		}
+		return ResponseEntity.badRequest().build();
 	}
 }

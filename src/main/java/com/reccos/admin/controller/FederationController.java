@@ -28,8 +28,8 @@ public class FederationController {
 	
 	@GetMapping(value = "/{id}")	
 	public ResponseEntity<Federation> listById(@PathVariable Long id) {
-		Federation arbitro = service.listById(id);
-		return ResponseEntity.ok().body(arbitro);
+		Federation federation = service.listById(id);
+		return ResponseEntity.ok().body(federation);
 	}
 	
 	@GetMapping(value = "/status/{status}")
@@ -45,15 +45,15 @@ public class FederationController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Federation> criarFederation(@RequestBody Federation arbitro) {
-		Federation obj = service.create(arbitro);
+	public ResponseEntity<Federation> criarFederation(@RequestBody Federation federation) {
+		Federation obj = service.create(federation);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Federation> atualizarFederation(@PathVariable Long id, @RequestBody Federation arbitro){
-		Federation obj = service.update(id, arbitro);
+	public ResponseEntity<Federation> atualizarFederation(@PathVariable Long id, @RequestBody Federation federation){
+		Federation obj = service.update(id, federation);
 		
 		if(obj != null) {
 			return ResponseEntity.ok(obj);

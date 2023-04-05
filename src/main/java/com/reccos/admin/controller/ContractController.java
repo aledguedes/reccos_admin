@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +27,17 @@ public class ContractController {
 	@Autowired
 	private ContractService service;
 	
-	@GetMapping("/contracts")
-	public ResponseEntity<List<Contract>> getAllTutorials(@RequestParam(required = false) String title) {
+	@GetMapping("/contracts/all")
+	public ResponseEntity<List<Contract>> getAllTutorials() {
 		List<Contract> list = service.listAll();
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping("/contracts")
+	public ResponseEntity<Page<Contract>> listAllPagiante(
+			@RequestParam (value = "page", required = false, defaultValue = "0") int page,
+			@RequestParam (value = "size", required = false, defaultValue = "12") int size){
+		Page<Contract> list = service.listAllPaginate(page, size);
 		return ResponseEntity.ok().body(list);
 	}
 

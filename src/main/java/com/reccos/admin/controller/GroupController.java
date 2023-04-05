@@ -28,8 +28,8 @@ public class GroupController {
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Group> listById(@PathVariable Long id) {
-		Group arbitro = service.listById(id);
-		return ResponseEntity.ok().body(arbitro);
+		Group group = service.listById(id);
+		return ResponseEntity.ok().body(group);
 	}
 	
 	@GetMapping
@@ -39,8 +39,8 @@ public class GroupController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Group> criarGroup(@RequestBody Group arbitro) {
-		Group obj = service.create(arbitro);
+	public ResponseEntity<Group> criarGroup(@RequestBody Group group) {
+		Group obj = service.create(group);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
@@ -54,9 +54,9 @@ public class GroupController {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Group> atualizarGroup(@PathVariable Long id, @RequestBody Group arbitro){
+	public ResponseEntity<Group> atualizarGroup(@PathVariable Long id, @RequestBody Group group){
 		System.out.println("UPDATE GROUP CONTROLLER");
-		Group obj = service.update(id, arbitro);
+		Group obj = service.update(id, group);
 		
 		if(obj != null) {
 			return ResponseEntity.ok(obj);

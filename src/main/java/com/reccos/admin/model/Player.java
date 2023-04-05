@@ -34,7 +34,7 @@ public class Player {
 	}
 
 	public Player(Long id, String name, String surname, LocalDate dt_nascimento, Integer position, Boolean status,
-			String cpf, String rg, String img_player, String team_name) {
+			String cpf, String rg, String img_player, String team_name, Scout scouts) {
 		super();
 		this.id = id;
 		this.name = name;

@@ -28,8 +28,8 @@ public class CardController {
 	
 	@GetMapping(value = "/{id}")	
 	public ResponseEntity<Card> listById(@PathVariable Long id) {
-		Card arbitro = service.listById(id);
-		return ResponseEntity.ok().body(arbitro);
+		Card card = service.listById(id);
+		return ResponseEntity.ok().body(card);
 	}
 	
 	@GetMapping
@@ -39,15 +39,15 @@ public class CardController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Card> criarCard(@RequestBody Card arbitro) {
-		Card obj = service.create(arbitro);
+	public ResponseEntity<Card> criarCard(@RequestBody Card card) {
+		Card obj = service.create(card);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Card> atualizarCard(@PathVariable Long id, @RequestBody Card arbitro){
-		Card obj = service.update(id, arbitro);
+	public ResponseEntity<Card> atualizarCard(@PathVariable Long id, @RequestBody Card card){
+		Card obj = service.update(id, card);
 		
 		if(obj != null) {
 			return ResponseEntity.ok(obj);

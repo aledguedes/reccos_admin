@@ -55,6 +55,9 @@ public class League {
 
 	@Column(name = "qt_group")
 	private Integer qt_group;
+	
+	@Column(name = "round_actv")
+	private Integer round_actv;
 
 	@Column(name = "status")
 	private Boolean status;
@@ -79,8 +82,8 @@ public class League {
 	}
 
 	public League(long id, String name, LocalDate dt_start, LocalDate dt_end, long idd_fed, String league_system,
-			String league_mode, Integer max_teams, Integer min_teams, Integer qt_group, Boolean status,
-			Set<Group> groups, Set<Team> teams, Federation federation) {
+			String league_mode, Integer max_teams, Integer min_teams, Integer qt_group, Integer round_actv,
+			Boolean status, Set<Group> groups, Set<Team> teams, Federation federation) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -92,6 +95,7 @@ public class League {
 		this.max_teams = max_teams;
 		this.min_teams = min_teams;
 		this.qt_group = qt_group;
+		this.round_actv = round_actv;
 		this.status = status;
 		this.groups = groups;
 		this.teams = teams;
@@ -208,6 +212,14 @@ public class League {
 
 	public void setGroups(Set<Group> groups) {
 		this.groups = groups;
+	}
+
+	public Integer getRound_actv() {
+		return round_actv;
+	}
+
+	public void setRound_actv(Integer round_actv) {
+		this.round_actv = round_actv;
 	}
 
 	public void addGroup(Group group) {

@@ -15,39 +15,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.reccos.admin.model.Goal;
-import com.reccos.admin.service.GoalService;
+import com.reccos.admin.model.Scout;
+import com.reccos.admin.service.ScoutService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/goals")
-public class GoalController {
+@RequestMapping("/api/scouts")
+public class ScoutController {
 	
 	@Autowired
-	private GoalService service;
+	private ScoutService service;
 	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<Goal> listById(@PathVariable Long id) {
-		Goal goal = service.listById(id);
-		return ResponseEntity.ok().body(goal);
+	@GetMapping(value = "/{id}")	
+	public ResponseEntity<Scout> listById(@PathVariable Long id) {
+		Scout federation = service.listById(id);
+		return ResponseEntity.ok().body(federation);
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Goal>> listarTodos(){
-		List<Goal> list = service.listAll();
+	public ResponseEntity<List<Scout>> listarTodos(){
+		List<Scout> list = service.listAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Goal> criarGoal(@RequestBody Goal goal) {
-		Goal obj = service.create(goal);
+	public ResponseEntity<Scout> criarScout(@RequestBody Scout federation) {
+		Scout obj = service.create(federation);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Goal> atualizarGoal(@PathVariable Long id, @RequestBody Goal goal){
-		Goal obj = service.update(id, goal);
+	public ResponseEntity<Scout> atualizarScout(@PathVariable Long id, @RequestBody Scout federation){
+		Scout obj = service.update(id, federation);
 		
 		if(obj != null) {
 			return ResponseEntity.ok(obj);

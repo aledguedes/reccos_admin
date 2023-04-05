@@ -32,7 +32,7 @@ public class RoundService {
 
 	@Autowired
 	private GroupService gService;
-	
+
 	@Autowired
 	private LeagueService leagueService;
 
@@ -44,7 +44,7 @@ public class RoundService {
 	public List<Round> listAll() {
 		return repository.findAll();
 	}
-	
+
 	public Page<Round> listAllPaginate(int page, int size) {
 		Pageable paging = PageRequest.of(page, size);
 		return repository.findAll(paging);
@@ -79,8 +79,8 @@ public class RoundService {
 		newRound.setLeague(l);
 
 		newRound.getMatches().addAll(obj.getMatches().stream().map(v -> {
-			if (v.getId() == null) { 
-				System.out.println("DEBUG IF: "+v.getId());
+			if (v.getId() == null) {
+				System.out.println("DEBUG IF: " + v.getId());
 				Match mm = new Match();
 				mm.setMatch_date(v.getMatch_date());
 				Team team_home = teamService.listById(v.getHome().getId());
@@ -103,4 +103,14 @@ public class RoundService {
 		Pageable paging = PageRequest.of(page, size);
 		return repository.findRoundByLeagueId(id, paging);
 	}
+
+	public Round finishRound(Long id_round, Round obj) {
+		Round r = listById(id_round);
+		if(r != null) {
+			obj.setMatches(r.getMatches());
+			obj.setStatus(false);
+		}
+		return obj;
+	}
+
 }
