@@ -65,9 +65,9 @@ public class RoundController {
 //		return new ResponseEntity<>(service.create(organization), HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/{id_round}/complete")
-	public ResponseEntity<Round> finishRound(@PathVariable Long id_round, @RequestBody Round round){
-		Round obj = service.finishRound(id_round, round);
+	@PutMapping("/{id_round}/league/{id_league}")
+	public ResponseEntity<Round> finishRound(@PathVariable Long id_round, @PathVariable Long id_league, @RequestBody Round round){
+		Round obj = service.finishRound(id_round, id_league, round);
 		
 		if(obj != null) {
 			return ResponseEntity.ok(obj);

@@ -104,12 +104,17 @@ public class RoundService {
 		return repository.findRoundByLeagueId(id, paging);
 	}
 
-	public Round finishRound(Long id_round, Round obj) {
+	public Round finishRound(Long id_round, Long id_league, Round obj) {
 		Round r = listById(id_round);
 		if(r != null) {
 			obj.setMatches(r.getMatches());
 			obj.setStatus(false);
 		}
+		
+		League l = leagueService.listById(id_league);
+		long r_active = id_round + 1;
+		l.setRound_actv(r_active);
+		leagueService.update(id_league, l);
 		return obj;
 	}
 
