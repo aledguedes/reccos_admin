@@ -27,14 +27,14 @@ public class Player {
 	private String rg;
 	private String img_player;
 	private String team_name;
+	private boolean suspend;
 
 	public Player() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Player(Long id, String name, String surname, LocalDate dt_nascimento, Integer position, Boolean status,
-			String cpf, String rg, String img_player, String team_name, Scout scouts) {
+			String cpf, String rg, String img_player, String team_name, boolean suspend) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -46,6 +46,7 @@ public class Player {
 		this.rg = rg;
 		this.img_player = img_player;
 		this.team_name = team_name;
+		this.suspend = suspend;
 	}
 
 	public Long getId() {
@@ -126,5 +127,13 @@ public class Player {
 
 	public void setTeam_name(String team_name) {
 		this.team_name = team_name;
+	}
+
+	public boolean isSuspend() {
+		return suspend;
+	}
+
+	public void setSuspend(boolean suspend) {
+		this.suspend = suspend;
 	}
 }

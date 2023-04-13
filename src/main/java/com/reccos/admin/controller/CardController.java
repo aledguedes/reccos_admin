@@ -38,6 +38,12 @@ public class CardController {
 		return ResponseEntity.ok().body(list);
 	}
 	
+//	@GetMapping("/players/{id_player}")
+//	public ResponseEntity<List<Card>> playerIdWithCard(@PathVariable Long id_player) {
+//		List<Card> list = service.cardByPlayerId(id_player);
+//		return ResponseEntity.ok().body(list);
+//	}
+	
 	@PostMapping
 	public ResponseEntity<Card> criarCard(@RequestBody Card card) {
 		Card obj = service.create(card);

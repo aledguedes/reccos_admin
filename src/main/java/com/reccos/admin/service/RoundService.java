@@ -87,6 +87,7 @@ public class RoundService {
 				Team team_visiting = teamService.listById(v.getVisiting().getId());
 				mm.setHome(team_home);
 				mm.setVisiting(team_visiting);
+				mm.setIdd_match(v.getIdd_match());
 				mm.getRounds().add(newRound);
 				return mm;
 			} else {
@@ -106,16 +107,15 @@ public class RoundService {
 
 	public Round finishRound(Long id_round, Long id_league, Round obj) {
 		Round r = listById(id_round);
-		if(r != null) {
-			obj.setMatches(r.getMatches());
-			obj.setStatus(false);
-		}
-		
+		obj.setId(id_round);
+		obj.setStatus(false);
+		obj.setMatches(r.getMatches());
+
 		League l = leagueService.listById(id_league);
 		long r_active = id_round + 1;
 		l.setRound_actv(r_active);
 		leagueService.update(id_league, l);
-		return obj;
+		return repository.save(obj);
 	}
 
 }
