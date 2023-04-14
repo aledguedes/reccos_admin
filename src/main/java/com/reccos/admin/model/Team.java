@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -44,21 +45,6 @@ public class Team {
 	@Column(name = "president")
 	private String president;
 
-	@Column(name = "cep")
-	private String cep;
-
-	@Column(name = "logradouro")
-	private String logradouro;
-
-	@Column(name = "numero")
-	private Integer numero;
-
-	@Column(name = "bairro")
-	private String bairro;
-
-	@Column(name = "complemento")
-	private String complemento;
-
 	@Column(name = "cidade")
 	private String cidade;
 
@@ -68,35 +54,32 @@ public class Team {
 	@Column(name = "img_scudo")
 	private String img_scudo;
 
-	@Column(name = "img_stadium")
-	private String img_stadium;
-
-	@Column(name = "phone")
-	private String phone;
-
 	@Column(name = "status")
 	private Boolean status;
+
+	@OneToMany
+	@JoinColumn(name = "teams_id")
+	private List<Stadium> stadium;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "teams")
 	@JsonIgnore
 	private Set<Federation> federation = new HashSet<>();
-	
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "teams")
 	@JsonIgnore
 	private Set<League> leagues = new HashSet<>();
 
 	@OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("team")
-	private List<Contract> contratos;
+	private List<Contract> contracts;
 
 	public Team() {
 		super();
 	}
 
 	public Team(long id, String name, String surname, LocalDate dt_nascimento, String initials, String president,
-			String cep, String logradouro, Integer numero, String bairro, String complemento, String cidade, String uf,
-			String img_scudo, String img_stadium, String phone, Boolean status, Set<Federation> federation,
-			Set<League> leagues, List<Contract> contratos) {
+			String cidade, String uf, String img_scudo, Boolean status, List<Stadium> stadium,
+			Set<Federation> federation, Set<League> leagues, List<Contract> contracts) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -104,20 +87,14 @@ public class Team {
 		this.dt_nascimento = dt_nascimento;
 		this.initials = initials;
 		this.president = president;
-		this.cep = cep;
-		this.logradouro = logradouro;
-		this.numero = numero;
-		this.bairro = bairro;
-		this.complemento = complemento;
 		this.cidade = cidade;
 		this.uf = uf;
 		this.img_scudo = img_scudo;
-		this.img_stadium = img_stadium;
-		this.phone = phone;
 		this.status = status;
+		this.stadium = stadium;
 		this.federation = federation;
 		this.leagues = leagues;
-		this.contratos = contratos;
+		this.contracts = contracts;
 	}
 
 	public long getId() {
@@ -144,14 +121,6 @@ public class Team {
 		this.surname = surname;
 	}
 
-	public Set<Federation> getFederation() {
-		return federation;
-	}
-
-	public void setFederation(Set<Federation> federation) {
-		this.federation = federation;
-	}
-
 	public LocalDate getDt_nascimento() {
 		return dt_nascimento;
 	}
@@ -174,46 +143,6 @@ public class Team {
 
 	public void setPresident(String president) {
 		this.president = president;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getLogradouro() {
-		return logradouro;
-	}
-
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
-	}
-
-	public Integer getNumero() {
-		return numero;
-	}
-
-	public void setNumero(Integer numero) {
-		this.numero = numero;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
 	}
 
 	public String getCidade() {
@@ -240,22 +169,6 @@ public class Team {
 		this.img_scudo = img_scudo;
 	}
 
-	public String getImg_stadium() {
-		return img_stadium;
-	}
-
-	public void setImg_stadium(String img_stadium) {
-		this.img_stadium = img_stadium;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
 	public Boolean getStatus() {
 		return status;
 	}
@@ -264,12 +177,20 @@ public class Team {
 		this.status = status;
 	}
 
-	public List<Contract> getContratos() {
-		return contratos;
+	public List<Stadium> getStadium() {
+		return stadium;
 	}
 
-	public void setContratos(List<Contract> contratos) {
-		this.contratos = contratos;
+	public void setStadium(List<Stadium> stadium) {
+		this.stadium = stadium;
+	}
+
+	public Set<Federation> getFederation() {
+		return federation;
+	}
+
+	public void setFederation(Set<Federation> federation) {
+		this.federation = federation;
 	}
 
 	public Set<League> getLeagues() {
@@ -278,5 +199,13 @@ public class Team {
 
 	public void setLeagues(Set<League> leagues) {
 		this.leagues = leagues;
+	}
+
+	public List<Contract> getContracts() {
+		return contracts;
+	}
+
+	public void setContracts(List<Contract> contracts) {
+		this.contracts = contracts;
 	}
 }

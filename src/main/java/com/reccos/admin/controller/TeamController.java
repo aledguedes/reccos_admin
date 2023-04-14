@@ -20,9 +20,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.reccos.admin.exceptions.ObjectnotFoundException;
 import com.reccos.admin.model.Federation;
+import com.reccos.admin.model.Stadium;
 import com.reccos.admin.model.Team;
 import com.reccos.admin.repository.FederationRepository;
 import com.reccos.admin.repository.TeamRepository;
+import com.reccos.admin.service.StadiumService;
 import com.reccos.admin.service.TeamService;
 
 @CrossOrigin("*")
@@ -38,6 +40,9 @@ public class TeamController {
 
 	@Autowired
 	private TeamRepository teamRepository;
+	
+	@Autowired
+	private StadiumService stadiumService;
 
 	@GetMapping("/teams")
 	public ResponseEntity<List<Team>> listarTodos() {
@@ -110,6 +115,8 @@ public class TeamController {
 			tutorial.addTag(tagRequest);
 			return teamRepository.save(tagRequest);
 		}).orElseThrow(() -> new ObjectnotFoundException("Not found Tutorial with id = " + ligaId));
+		
+		tag.setStadium(stadiumService.createList(tagRequest.getStadium()));
 
 		return new ResponseEntity<>(tag, HttpStatus.CREATED);
 	}
