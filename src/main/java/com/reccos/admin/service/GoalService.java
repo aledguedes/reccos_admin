@@ -30,6 +30,10 @@ public class GoalService {
 		Optional<Goal> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectnotFoundException("Erro! Objeto não encontrado! GOAL ID " + id));
 	}
+	
+	public List<Goal> goalByMatch(Long match_id) {
+		return repository.findGoalsByMatchId(match_id);
+	}
 
 	public List<Goal> listAll() {
 		return repository.findAll();

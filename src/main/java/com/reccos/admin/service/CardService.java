@@ -46,7 +46,8 @@ public class CardService {
 		Integer suspenso = 0;
 		Match m = matchService.listById(obj.getMatch().getId());
 		Player p = playerService.listById(obj.getPlayer().getId());
-
+		System.out.println("DEBUG R_CARD: "+obj.getRed_card());
+		System.out.println("DEBUG Y_CARD: "+obj.getYellow_card());
 		obj.setMatch(m);
 		obj.setPlayer(p);
 

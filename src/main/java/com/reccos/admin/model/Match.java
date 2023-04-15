@@ -27,8 +27,15 @@ public class Match {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private Integer idd_match;
-
+	@Column(name = "home_goals")
+	private Integer home_goals;
+	
+	@Column(name = "visiting_goals")
+	private Integer visiting_goals;
+	
+	@Column(name = "status")
+	private Boolean status;
+	
 	@Column(name = "match_date")
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate match_date;
@@ -56,11 +63,13 @@ public class Match {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Match(Long id, Integer idd_match, LocalDate match_date, Team home, Team visiting, Refree head_referee,
-			Refree assistant_referee, Set<Round> rounds) {
+	public Match(Long id, Integer home_goals, Integer visiting_goals, Boolean status, LocalDate match_date, Team home,
+			Team visiting, Refree head_referee, Refree assistant_referee, Set<Round> rounds) {
 		super();
 		this.id = id;
-		this.idd_match = idd_match;
+		this.home_goals = home_goals;
+		this.visiting_goals = visiting_goals;
+		this.status = status;
 		this.match_date = match_date;
 		this.home = home;
 		this.visiting = visiting;
@@ -69,12 +78,12 @@ public class Match {
 		this.rounds = rounds;
 	}
 
-	public Integer getIdd_match() {
-		return idd_match;
+	public Boolean getStatus() {
+		return status;
 	}
 
-	public void setIdd_match(Integer idd_match) {
-		this.idd_match = idd_match;
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 	public Long getId() {
@@ -83,6 +92,22 @@ public class Match {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Integer getHome_goals() {
+		return home_goals;
+	}
+
+	public void setHome_goals(Integer home_goals) {
+		this.home_goals = home_goals;
+	}
+
+	public Integer getVisiting_goals() {
+		return visiting_goals;
+	}
+
+	public void setVisiting_goals(Integer visiting_goals) {
+		this.visiting_goals = visiting_goals;
 	}
 
 	public LocalDate getMatch_date() {
@@ -109,14 +134,6 @@ public class Match {
 		this.visiting = visiting;
 	}
 
-	public Set<Round> getRounds() {
-		return rounds;
-	}
-
-	public void setRounds(Set<Round> rounds) {
-		this.rounds = rounds;
-	}
-
 	public Refree getHead_referee() {
 		return head_referee;
 	}
@@ -133,4 +150,11 @@ public class Match {
 		this.assistant_referee = assistant_referee;
 	}
 
+	public Set<Round> getRounds() {
+		return rounds;
+	}
+
+	public void setRounds(Set<Round> rounds) {
+		this.rounds = rounds;
+	}
 }

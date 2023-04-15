@@ -26,15 +26,10 @@ public class Card {
 
 	@Column(name = "red_card")
 	private Integer red_card;
-	
-	@Column(name = "ttl_yellow", columnDefinition = "integer default 0")
-	private Integer ttl_yellow;
-
-	@Column(name = "ttl_red", columnDefinition = "integer default 0")
-	private Integer ttl_red;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "player_id", nullable = false)
+	@JsonIgnoreProperties({ "contracts" })
 	private Player player;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
@@ -47,14 +42,11 @@ public class Card {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Card(long id, Integer yellow_card, Integer red_card, Integer ttl_yellow, Integer ttl_red, Player player,
-			Match match) {
+	public Card(long id, Integer yellow_card, Integer red_card, Player player, Match match) {
 		super();
 		this.id = id;
 		this.yellow_card = yellow_card;
 		this.red_card = red_card;
-		this.ttl_yellow = ttl_yellow;
-		this.ttl_red = ttl_red;
 		this.player = player;
 		this.match = match;
 	}
@@ -98,21 +90,4 @@ public class Card {
 	public void setMatch(Match match) {
 		this.match = match;
 	}
-
-	public Integer getTtl_yellow() {
-		return ttl_yellow;
-	}
-
-	public void setTtl_yellow(Integer ttl_yellow) {
-		this.ttl_yellow = ttl_yellow;
-	}
-
-	public Integer getTtl_red() {
-		return ttl_red;
-	}
-
-	public void setTtl_red(Integer ttl_red) {
-		this.ttl_red = ttl_red;
-	}
-
 }

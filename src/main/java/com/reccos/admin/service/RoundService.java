@@ -87,7 +87,9 @@ public class RoundService {
 				Team team_visiting = teamService.listById(v.getVisiting().getId());
 				mm.setHome(team_home);
 				mm.setVisiting(team_visiting);
-				mm.setIdd_match(v.getIdd_match());
+				mm.setHome_goals(null);
+				mm.setVisiting_goals(null);
+				mm.setStatus(true);
 				mm.getRounds().add(newRound);
 				return mm;
 			} else {

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,5 +56,15 @@ public class MatchController {
 		List<Match> obj = service.create(match);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@PutMapping("/matches/{id}")
+	public ResponseEntity<Match> finishRound(@PathVariable Long id, @RequestBody Match match){
+		Match obj = service.update(id, match);
+		
+		if(obj != null) {
+			return ResponseEntity.ok(obj);
+		}
+		return ResponseEntity.badRequest().build();
 	}
 }

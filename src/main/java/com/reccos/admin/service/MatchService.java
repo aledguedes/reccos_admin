@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.reccos.admin.exceptions.ObjectnotFoundException;
 import com.reccos.admin.model.Match;
+import com.reccos.admin.model.Team;
 import com.reccos.admin.repository.MatchRepository;
 
 @Service
@@ -19,6 +20,9 @@ public class MatchService {
 
 	@Autowired
 	private MatchRepository repository;
+	
+	@Autowired
+	private TeamService teamService;
 	
 	public Match listById(Long id) {
 		Optional<Match> obj = repository.findById(id);
@@ -41,6 +45,17 @@ public class MatchService {
 
 	public Match update(Long id, Match obj) {
 		obj.setId(id);
+		Team v = teamService.listById(obj.getVisiting().getId());
+		Team h = teamService.listById(obj.getHome().getId());
+		obj.setHome(h);
+		obj.setStatus(false);
+		obj.setVisiting(v);
+		if( obj.getHome_goals() == null ) {
+			obj.setHome_goals(0);
+		}
+		if( obj.getVisiting_goals() == null ) {
+			obj.setVisiting_goals(0);
+		}
 		return repository.save(obj);
 	}
 

@@ -32,6 +32,12 @@ public class GoalController {
 		return ResponseEntity.ok().body(goal);
 	}
 	
+	@GetMapping(value = "/{match_id}/match")
+	public ResponseEntity<List<Goal>> listGoalsByMatchId(@PathVariable Long match_id) {
+		List<Goal> goal = service.goalByMatch(match_id);
+		return ResponseEntity.ok().body(goal);
+	}
+	
 	@GetMapping
 	public ResponseEntity<List<Goal>> listarTodos(){
 		List<Goal> list = service.listAll();
