@@ -12,7 +12,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -88,6 +90,11 @@ public class Team {
 	@OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("team")
 	private List<Contract> contratos;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "stadium_id")
+//	@JsonIgnore
+	private Stadium stadium;
 
 	public Team() {
 		super();
