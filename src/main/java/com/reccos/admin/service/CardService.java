@@ -82,4 +82,8 @@ public class CardService {
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}
+
+	public List<Card> cardByMatch(Long match_id) {
+		return repository.findCardsByMatchId(match_id);
+	}
 }

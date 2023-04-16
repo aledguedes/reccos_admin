@@ -32,6 +32,12 @@ public class CardController {
 		return ResponseEntity.ok().body(card);
 	}
 	
+	@GetMapping(value = "/{match_id}/match")
+	public ResponseEntity<List<Card>> listGoalsByMatchId(@PathVariable Long match_id) {
+		List<Card> card = service.cardByMatch(match_id);
+		return ResponseEntity.ok().body(card);
+	}
+	
 	@GetMapping
 	public ResponseEntity<List<Card>> listarTodos(){
 		List<Card> list = service.listAll();

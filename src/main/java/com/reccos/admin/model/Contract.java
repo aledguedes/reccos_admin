@@ -31,7 +31,7 @@ public class Contract {
 
 	@ManyToOne
 	@JoinColumn(name = "team_id")
-	@JsonIgnoreProperties({"league", "contratos"})
+	@JsonIgnoreProperties({"league", "contracts"})
 	private Team team;
 
 	@ManyToOne

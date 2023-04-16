@@ -26,7 +26,7 @@ public class FederationController {
 	@Autowired
 	private FederationService service;
 	
-	@GetMapping(value = "/{id}")	
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<Federation> listById(@PathVariable Long id) {
 		Federation federation = service.listById(id);
 		return ResponseEntity.ok().body(federation);

@@ -157,6 +157,11 @@ public class Federation {
 		tag.getFederation().add(this);
 	}
 
+	public void addRefree(Refree tag) {
+		this.refrees.add(tag);
+		tag.getFederation().add(this);
+	}
+
 	public void removeTag(long tagId) {
 		Team tag = this.teams.stream().filter(t -> t.getId() == tagId).findFirst().orElse(null);
 		if (tag != null) {
