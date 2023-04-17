@@ -41,11 +41,11 @@ public class Match {
 	private LocalDate match_date;
 
 	@ManyToOne
-	@JsonIgnoreProperties("contract")
+	@JsonIgnoreProperties("contratos")
 	private Team home;
 
 	@ManyToOne
-	@JsonIgnoreProperties("contract")
+	@JsonIgnoreProperties("contratos")
 	private Team visiting;
 
 	@ManyToOne
