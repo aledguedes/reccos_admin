@@ -12,11 +12,17 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class UploadService {
 
-	public String uploadImage(MultipartFile file) {
+	public String uploadImage(MultipartFile file, String slug) {
+		
+		System.out.println("UPLOAD IMAGEM: "+file);
 		
 		try {
-			String caminho = "D:\\TCC\\imagens";
-			Path path = Paths.get(caminho + File.separator + file.getOriginalFilename());
+			String caminho = "D:\\TCC\\imagens\\"+slug;
+			File dir = new File(caminho);
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+			Path path = Paths.get(dir + File.separator + file.getOriginalFilename());
 			Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 			System.out.println("DEBUG - Arquivo copiado...");
 			return file.getOriginalFilename();
