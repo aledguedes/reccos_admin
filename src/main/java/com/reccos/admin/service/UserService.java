@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.reccos.admin.model.User;
@@ -28,9 +29,11 @@ public class UserService {
 	public User recuperarUser(User original) {
 		User user = repository.findByEmailOrPassword(original.getEmail(), original.getPassword());
 		if (user != null) {
-			if (user.getPassword().equals(original.getPassword()) && user.getEmail().equals(original.getEmail())) {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			if (encoder.matches(original.getPassword(), user.getPassword())) {
 //				user.setPassword(null);
 //				user.setEmail(null);
+				System.out.println("deu match!!!");
 				return user;
 			}
 		}

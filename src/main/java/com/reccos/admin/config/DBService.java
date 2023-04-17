@@ -49,8 +49,8 @@ public class DBService {
 
 	public void InstanciaDB() {
 
-		User user1 = new User(null, "kokhym", "aledguedes@gmail.com", "12345", 1, null, null, "admin");
-		User user2 = new User(null, "Xandão", "xandao@teste.com", "abcd1234", 1, null, null, "user");
+		User user1 = new User(null, "kokhym", "aledguedes@gmail.com", encoder.encode("12345"), 1, null, null, "admin");
+		User user2 = new User(null, "Xandão", "xandao@teste.com", encoder.encode("abcd1234"), 1, null, null, "user");
 
 		Team tm1 = new Team(1, "São Paulo Futebol Clube", "São Paulo", null, "SPFC", "Santo Paulo", "01100-000",
 				"Rua São Paulo", 1, "Morumbi", null, "São Paulo", "SP",
