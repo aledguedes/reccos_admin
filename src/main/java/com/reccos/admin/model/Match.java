@@ -17,7 +17,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "matches")
@@ -41,11 +40,11 @@ public class Match {
 	private LocalDate match_date;
 
 	@ManyToOne
-	@JsonIgnoreProperties("contratos")
+//	@JsonIgnoreProperties("contratos")
 	private Team home;
 
 	@ManyToOne
-	@JsonIgnoreProperties("contratos")
+//	@JsonIgnoreProperties("contratos")
 	private Team visiting;
 
 	@ManyToOne
