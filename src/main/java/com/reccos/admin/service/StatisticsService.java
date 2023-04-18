@@ -27,10 +27,14 @@ public class StatisticsService {
 	public Statistics statisticsByTeamId(long id_team) {
 		return repository.findStatisticsByTeamId(id_team);
 	}
+	
+	public Statistics create(Statistics list) {
+		list.setId(null);
+		return repository.save(list);
+	}
 
-	public Statistics create(Statistics obj) {
-		obj.setId(null);
-		return repository.save(obj);
+	public List<Statistics> createListStatistics(List<Statistics> obj) {
+		return repository.saveAll(obj);
 	}
 
 	public Statistics update(Long id, Statistics obj) {

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.reccos.admin.exceptions.ObjectnotFoundException;
 import com.reccos.admin.model.Group;
+import com.reccos.admin.model.Statistics;
+import com.reccos.admin.model.Team;
 import com.reccos.admin.repository.GroupRepository;
 import com.reccos.admin.repository.LeagueRepository;
 
@@ -19,6 +21,9 @@ public class GroupService {
 
 	@Autowired
 	private LeagueRepository leagueRepository;
+
+	@Autowired
+	private StatisticsService statisticsService;
 
 	public Group listById(Long id) {
 		Optional<Group> obj = repository.findById(id);
@@ -39,8 +44,24 @@ public class GroupService {
 		if (obj.getTeams().size() == 0) {
 			Group g = listById(id);
 			obj.setTeams(g.getTeams());
+		} else {
+			Group g = repository.save(obj);
+			for (Team t : g.getTeams()) {
+				System.out.println("UPDATE GROUP: " + t.getSurname());
+				Statistics s = new Statistics();
+				s.setGroup(g);
+				s.setLosers(0);
+				s.setWinners(0);
+				s.setNum_match(0);
+				s.setOwn_goals(0);
+				s.setPoints(0);
+				s.setPro_goals(0);
+				s.setTie(0);
+				s.setTeam(t);
+				statisticsService.create(s);
+			}
 		}
-		return repository.save(obj);
+		return obj;
 	}
 
 	public Group groupByLeague(Group obj, Long id) {

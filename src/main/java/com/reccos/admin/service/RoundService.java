@@ -114,7 +114,7 @@ public class RoundService {
 		obj.setMatches(r.getMatches());
 
 		League l = leagueService.listById(id_league);
-		long r_active = id_round + 1;
+		long r_active = l.getRound_actv() + 1;
 		l.setRound_actv(r_active);
 		leagueService.update(id_league, l);
 		return repository.save(obj);
