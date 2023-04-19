@@ -47,7 +47,7 @@ public class GroupService {
 		} else {
 			Group g = repository.save(obj);
 			for (Team t : g.getTeams()) {
-				System.out.println("UPDATE GROUP: " + t.getSurname());
+				System.out.println("UPDATE GROUP ID: " + g.getId());
 				Statistics s = new Statistics();
 				s.setGroup(g);
 				s.setLosers(0);
