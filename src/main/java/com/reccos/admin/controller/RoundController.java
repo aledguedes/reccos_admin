@@ -56,6 +56,15 @@ public class RoundController {
 		Page<Round> list = service.roundIdLeague(id, page, size);
 		return ResponseEntity.ok().body(list);
 	}
+	
+	@GetMapping("/find/{num_round}")
+	public ResponseEntity<Page<Round>> matchByNumRound(
+			@PathVariable("num_round") long num_round,
+			@RequestParam (value = "page", required = false, defaultValue = "0") int page,
+			@RequestParam (value = "size", required = false, defaultValue = "12") int size) {
+		Page<Round> list = service.roundByNumRound(num_round, page, size); 
+		return ResponseEntity.ok().body(list);
+	}
 
 	@PostMapping("/{id_league}")
 	public ResponseEntity<Round> createRound(@RequestBody Round organization, @PathVariable("id_league") long id_league) {

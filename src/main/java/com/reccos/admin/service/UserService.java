@@ -50,11 +50,10 @@ public class UserService {
 
 	public User newUser(User novo) {
 		if (novo.getLogin().length() > 0 && novo.getPassword().length() > 0) {
-//			novo.setAtivo(1);
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			try {
 				novo.setId(null);
-//				novo.setPassword(encoder.encode(novo.getPassword()));
-				novo.setPassword(novo.getPassword());
+				novo.setPassword(encoder.encode(novo.getPassword()));
 				emailService.sendEmail(novo.getEmail(), "Cadastro de Clientes",
 						"Seu cadastro foi efetuado com sucesso!");
 				repository.save(novo);
@@ -73,10 +72,9 @@ public class UserService {
 		if (newUser != null) {
 
 			Date diff = new Date(new Date().getTime() - newUser.getValidationToken().getTime());
-
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			if (diff.getTime() / 1000 < 1800) {
-//				newUser.setPassword(encoder.encode(user.getPassword()));
-				newUser.setPassword(newUser.getPassword());
+				newUser.setPassword(encoder.encode(user.getPassword()));
 //				newUser.setCodToken(null);
 				return repository.save(newUser);
 

@@ -73,7 +73,7 @@ public class RoundService {
 		newRound.setDt_start(obj.getDt_start());
 //		newRound.setLeague_idd(obj.getLeague_idd());
 		newRound.setGroup_idd(obj.getGroup_idd());
-		newRound.setNum_round(obj.getNum_round());
+		newRound.setNumRound(obj.getNumRound());
 		newRound.setGroup(g);
 		newRound.setStatus(obj.getStatus());
 		newRound.setLeague(l);
@@ -105,6 +105,11 @@ public class RoundService {
 	public Page<Round> roundIdLeague(long id, int page, int size) {
 		Pageable paging = PageRequest.of(page, size);
 		return repository.findRoundByLeagueId(id, paging);
+	}
+	
+	public Page<Round> roundByNumRound(long num_round, int page, int size) {
+		Pageable paging = PageRequest.of(page, size);
+		return repository.findRoundBynumRound(num_round, paging);
 	}
 
 	public Round finishRound(Long id_round, Long id_league, Round obj) {

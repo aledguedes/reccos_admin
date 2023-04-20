@@ -10,4 +10,6 @@ public interface RoundRepository extends JpaRepository<Round, Long> {
 
 	Page<Round> findRoundByLeagueId(long id, Pageable paging);
 
+	Page<Round> findRoundBynumRound(long num_round, Pageable paging);
+
 }
