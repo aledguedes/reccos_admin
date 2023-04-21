@@ -17,7 +17,7 @@ public class UploadService {
 		System.out.println("UPLOAD IMAGEM: "+file);
 		
 		try {
-			String caminho = "D:\\TCC\\imagens\\"+slug;
+			String caminho = "D:\\TCC\\FRONT\\admin\\src\\assets\\"+slug;
 			File dir = new File(caminho);
 			if (!dir.exists()) {
 				dir.mkdirs();
