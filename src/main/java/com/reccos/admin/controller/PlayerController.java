@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.reccos.admin.dto.PathDTO;
 import com.reccos.admin.model.Player;
 import com.reccos.admin.service.PlayerService;
 import com.reccos.admin.utils.UploadService;
@@ -73,16 +74,17 @@ public class PlayerController {
 		return ResponseEntity.created(uri).build();
 	}
 
-	@PostMapping("/players/upload")
-	public ResponseEntity<Player> upload( @ModelAttribute Player atleta, @RequestParam(name = "file") MultipartFile file) {
-		String slug = "players";
-		Player newPlayer = new Player();
+	@PostMapping("/players/upload/{slug}")
+	public ResponseEntity<PathDTO> uploadFoto(@RequestParam(name = "file") MultipartFile file,
+			@PathVariable String slug){
+		System.out.println("debug string slug: "+slug);
 		String path = upload.uploadImage(file, slug);
-		newPlayer.setImg_player(path);
-		service.create(newPlayer);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newPlayer.getId())
-				.toUri();
-		return ResponseEntity.created(uri).build();
+		if (path != null) {
+			PathDTO pathDto = new PathDTO();
+			pathDto.setPathToFile(path);
+			return ResponseEntity.ok().body(pathDto);
+		}
+		return ResponseEntity.badRequest().build();
 	}
 
 	@PutMapping("/players/{id}")

@@ -57,8 +57,8 @@ public class ContractController {
 	@PostMapping("/contracts/{id_team}/team")
 	public ResponseEntity<Contract> createContractTeamPlayer(@RequestBody Contract contract, @PathVariable("id_team") long id_team) {
 		Contract obj = service.createTeamPlayer(contract, id_team);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+//		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.ok().body(obj);
 	}
 	
 	@PutMapping("/contracts/{id}")
