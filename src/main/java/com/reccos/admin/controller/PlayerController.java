@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,13 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.reccos.admin.dto.PathDTO;
 import com.reccos.admin.model.Player;
 import com.reccos.admin.service.PlayerService;
-import com.reccos.admin.utils.UploadService;
 
 @CrossOrigin("*")
 @RestController
@@ -32,9 +28,6 @@ public class PlayerController {
 
 	@Autowired
 	private PlayerService service;
-
-	@Autowired
-	private UploadService upload;
 
 	@GetMapping("/players/{id}")
 	public ResponseEntity<Player> listById(@PathVariable Long id) {
@@ -72,19 +65,6 @@ public class PlayerController {
 		Player obj = service.create(atleta);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
-	}
-
-	@PostMapping("/players/upload/{slug}")
-	public ResponseEntity<PathDTO> uploadFoto(@RequestParam(name = "file") MultipartFile file,
-			@PathVariable String slug){
-		System.out.println("debug string slug: "+slug);
-		String path = upload.uploadImage(file, slug);
-		if (path != null) {
-			PathDTO pathDto = new PathDTO();
-			pathDto.setPathToFile(path);
-			return ResponseEntity.ok().body(pathDto);
-		}
-		return ResponseEntity.badRequest().build();
 	}
 
 	@PutMapping("/players/{id}")
