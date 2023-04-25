@@ -1,11 +1,15 @@
-# Define a imagem base
-FROM adoptopenjdk:11-jre-hotspot
+#
+# Build stage
+#
+FROM maven:3.8.2-jdk-11 AS build
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Define o diretório de trabalho
-WORKDIR /app
-
-# Copia o arquivo JAR da aplicação para o diretório de trabalho
-COPY target/reccos-admin.jar /app/reccos-admin.jar
-
-# Define o comando a ser executado ao iniciar o container
-CMD ["java", "-jar", "reccos-admin.jar"]
+#
+# Package stage
+#
+FROM openjdk:11-jdk-slim
+COPY --from=build /target/reccos-admin.jar reccos-admin.jar
+# ENV PORT=8080
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","demo.jar"]
