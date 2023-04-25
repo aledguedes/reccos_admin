@@ -9,7 +9,7 @@ RUN mvn clean package -Pprod -DskipTests
 # Package stage
 #
 FROM openjdk:11-jdk-slim
-COPY --from=build /target/admin-0.0.1-SNAPSHOT.jar /app/admin-0.0.1-SNAPSHOT.jar
+COPY --from=build /target/admin-0.0.1-SNAPSHOT.jar /app/app.jar
 # ENV PORT=8080
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "admin-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
