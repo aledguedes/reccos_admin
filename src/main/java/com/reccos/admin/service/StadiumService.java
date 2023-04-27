@@ -36,6 +36,9 @@ public class StadiumService {
 
 	public Stadium update(Long id, Stadium obj) {
 		obj.setId(id);
+		Stadium s = listById(id);
+		System.out.println("estádio: "+s.getName());
+		obj.setImg_stadium(s.getImg_stadium());
 		return repository.save(obj);
 	}
 

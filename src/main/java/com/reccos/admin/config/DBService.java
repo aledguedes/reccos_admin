@@ -100,7 +100,7 @@ public class DBService {
 				null, null, null, null);
 
 		Federation f1 = new Federation(1, "LIGA NORDESTINA DE FUTEBOL", "AGRESTE", null, null, true, null, null, null);
-		federationRepository.saveAll(Arrays.asList(f1));
+//		federationRepository.saveAll(Arrays.asList(f1)); 
 
 		League lg1 = new League(1, "El Potato League A", null, null, 1, "Mata-mata", "Futsal", 12, 6, 1, 1, true, null,
 				null, f1);
@@ -109,7 +109,7 @@ public class DBService {
 				null, f1);
 
 		userRepository.saveAll(Arrays.asList(user1, user2));
-		teamRepository.saveAll(Arrays.asList(tm1, tm2, tm3, tm4, tm5, tm6, tm7, tm8, tm9, tm10, tm11, tm12));
+//		teamRepository.saveAll(Arrays.asList(tm1, tm2, tm3, tm4, tm5, tm6, tm7, tm8, tm9, tm10, tm11, tm12));
 //		leagueRepository.saveAll(Arrays.asList(lg1));
 //		playerRepository.saveAll(Arrays.asList(p1));
 //		matchRepository.saveAll(Arrays.asList(m1));

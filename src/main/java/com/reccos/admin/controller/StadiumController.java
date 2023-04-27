@@ -33,7 +33,7 @@ public class StadiumController {
 		return ResponseEntity.ok().body(stadium);
 	}
 	
-	@GetMapping(value = "/{team_id}/teams")	
+	@GetMapping(value = "/{team_id}/teams")
 	public ResponseEntity<List<Stadium>> stadiumByTeamId(@PathVariable Long team_id) {
 		List<Stadium> stadium = service.stadiumByTeamId(team_id);
 		return ResponseEntity.ok().body(stadium);
